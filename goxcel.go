@@ -3,6 +3,7 @@ package goxcel
 import (
 	"github.com/go-ole/go-ole"
 	"github.com/go-ole/go-ole/oleutil"
+	"log"
 )
 
 type Mode int
@@ -14,8 +15,9 @@ const (
 
 type (
 	Goxcel struct {
-		Args  *Args
-		excel *ole.IDispatch
+		Args      *Args
+		excel     *ole.IDispatch
+		workbooks *Workbooks
 	}
 
 	Args struct {
@@ -23,7 +25,7 @@ type (
 		FileMode Mode
 	}
 
-	ReleaseFunc func()
+	ReleaseFunc func(withQuit bool)
 )
 
 func NewArgs(filePath string) *Args {
@@ -68,14 +70,36 @@ func (g *Goxcel) init() error {
 	return nil
 }
 
-func (g *Goxcel) release() {
+func (g *Goxcel) release(withQuit bool) {
 	defer ole.CoUninitialize()
 	defer g.excel.Release()
+
+	if withQuit {
+		defer func() {
+			err := g.Quit()
+			log.Fatal(err)
+		}()
+	}
 }
 
 func (g *Goxcel) Visible(value bool) error {
 	_, err := oleutil.PutProperty(g.excel, "Visible", value)
 	return err
+}
+
+func (g *Goxcel) Workbooks() (*Workbooks, error) {
+	if g.workbooks != nil {
+		return g.workbooks, nil
+	}
+
+	wb, err := oleutil.GetProperty(g.excel, "Workbooks")
+	if err != nil {
+		return nil, err
+	}
+
+	g.workbooks = NewWorkbooks(g, wb.ToIDispatch())
+
+	return g.workbooks, nil
 }
 
 func (g *Goxcel) Quit() error {
