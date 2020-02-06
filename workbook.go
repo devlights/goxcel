@@ -7,8 +7,8 @@ import (
 
 type (
 	Workbook struct {
-		w  *ole.IDispatch
 		wb *Workbooks
+		w  *ole.IDispatch
 	}
 )
 
