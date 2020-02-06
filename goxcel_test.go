@@ -62,3 +62,54 @@ func TestGoxcelWorkbooks(t *testing.T) {
 		t.Error(err)
 	}
 }
+
+func TestGoxcelCellValue(t *testing.T) {
+	g, r, err := NewGoxcel(NewArgs(""))
+	if err != nil {
+		t.Error(err)
+	}
+
+	defer r(true)
+
+	_ = g.Visible(true)
+	wbs, _ := g.Workbooks()
+	wb, _ := wbs.Add()
+
+	ws, err := wb.Sheets(1)
+	if err != nil {
+		t.Error(err)
+	}
+
+	time.Sleep(2 * time.Second)
+
+	c, err := ws.Cells(1, 1)
+	if err != nil {
+		t.Error(err)
+	}
+
+	err = c.SetValue("helloworld")
+	if err != nil {
+		t.Error(err)
+	}
+
+	v, err := c.Value()
+	if err != nil {
+		t.Error(err)
+	}
+
+	if v.(string) != "helloworld" {
+		t.Errorf("Want: helloworld\tGot: %v", v)
+	}
+
+	time.Sleep(3 * time.Second)
+
+	err = wb.Saved(true)
+	if err != nil {
+		t.Error(err)
+	}
+
+	err = wb.Close()
+	if err != nil {
+		t.Error(err)
+	}
+}
