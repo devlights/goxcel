@@ -13,10 +13,17 @@ type (
 )
 
 func NewWorkbooks(g *Goxcel, wb *ole.IDispatch) *Workbooks {
-	return &Workbooks{
+	w := &Workbooks{
 		g:  g,
 		wb: wb,
 	}
+
+	releaser.Add(func() error {
+		w.wb.Release()
+		return nil
+	})
+
+	return w
 }
 
 func (w *Workbooks) Add() (*Workbook, error) {

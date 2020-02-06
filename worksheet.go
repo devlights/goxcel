@@ -8,13 +8,23 @@ import (
 
 type (
 	Worksheet struct {
-		b *Workbook
-		s *ole.IDispatch
+		wb *Workbook
+		ws *ole.IDispatch
 	}
 )
 
-func NewWorksheet(b *Workbook, s *ole.IDispatch) *Worksheet {
-	return &Worksheet{b: b, s: s}
+func NewWorksheet(wb *Workbook, ws *ole.IDispatch) *Worksheet {
+	s := &Worksheet{
+		wb: wb,
+		ws: ws,
+	}
+
+	releaser.Add(func() error {
+		s.ws.Release()
+		return nil
+	})
+
+	return s
 }
 
 func (ws *Worksheet) Cells(row int, col int) (*Cell, error) {
@@ -28,7 +38,7 @@ func (ws *Worksheet) Cells(row int, col int) (*Cell, error) {
 		return nil, e
 	}
 
-	c, err := oleutil.GetProperty(ws.s, "Cells", row, col)
+	c, err := oleutil.GetProperty(ws.ws, "Cells", row, col)
 	if err != nil {
 		return nil, err
 	}

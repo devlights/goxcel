@@ -13,7 +13,7 @@ func TestGoxcelStartup(t *testing.T) {
 		t.Error(err)
 	}
 
-	defer r(false)
+	defer r()
 
 	err = g.Visible(true)
 	if err != nil {
@@ -21,11 +21,6 @@ func TestGoxcelStartup(t *testing.T) {
 	}
 
 	time.Sleep(3 * time.Second)
-
-	err = g.Quit()
-	if err != nil {
-		t.Error(err)
-	}
 }
 
 func TestGoxcelWorkbooks(t *testing.T) {
@@ -36,7 +31,7 @@ func TestGoxcelWorkbooks(t *testing.T) {
 		t.Error(err)
 	}
 
-	defer r(true)
+	defer r()
 
 	_ = g.Visible(true)
 
@@ -69,7 +64,7 @@ func TestGoxcelCellValue(t *testing.T) {
 		t.Error(err)
 	}
 
-	defer r(true)
+	defer r()
 
 	_ = g.Visible(true)
 	wbs, _ := g.Workbooks()

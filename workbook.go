@@ -8,16 +8,23 @@ import (
 
 type (
 	Workbook struct {
-		wb *Workbooks
-		w  *ole.IDispatch
+		wbs *Workbooks
+		wb  *ole.IDispatch
 	}
 )
 
-func NewWorkbook(wb *Workbooks, w *ole.IDispatch) *Workbook {
-	return &Workbook{
-		wb: wb,
-		w:  w,
+func NewWorkbook(wbs *Workbooks, wb *ole.IDispatch) *Workbook {
+	b := &Workbook{
+		wbs: wbs,
+		wb:  wb,
 	}
+
+	releaser.Add(func() error {
+		b.wb.Release()
+		return nil
+	})
+
+	return b
 }
 
 func (w *Workbook) Sheets(index int) (*Worksheet, error) {
@@ -26,7 +33,7 @@ func (w *Workbook) Sheets(index int) (*Worksheet, error) {
 		return nil, e
 	}
 
-	s, err := oleutil.GetProperty(w.w, "Worksheets", index)
+	s, err := oleutil.GetProperty(w.wb, "Worksheets", index)
 	if err != nil {
 		return nil, err
 	}
@@ -37,11 +44,11 @@ func (w *Workbook) Sheets(index int) (*Worksheet, error) {
 }
 
 func (w *Workbook) Saved(value bool) error {
-	_, err := oleutil.PutProperty(w.w, "Saved", value)
+	_, err := oleutil.PutProperty(w.wb, "Saved", value)
 	return err
 }
 
 func (w *Workbook) Close() error {
-	_, err := oleutil.CallMethod(w.w, "Close", false)
+	_, err := oleutil.CallMethod(w.wb, "Close", false)
 	return err
 }

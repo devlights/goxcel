@@ -13,6 +13,10 @@ const (
 	ModeOpen
 )
 
+var (
+	releaser = NewReleaser()
+)
+
 type (
 	Goxcel struct {
 		Args      *Args
@@ -25,7 +29,7 @@ type (
 		FileMode Mode
 	}
 
-	ReleaseFunc func(withQuit bool)
+	ReleaseFunc func()
 )
 
 func NewArgs(filePath string) *Args {
@@ -46,7 +50,17 @@ func NewGoxcel(args *Args) (*Goxcel, ReleaseFunc, error) {
 
 	err := g.init()
 
-	return g, g.release, err
+	releaser.Add(g.quit)
+	releaser.Add(g.release)
+
+	startReleaserFunc := func() {
+		e := releaser.Release()
+		if e != nil {
+			log.Println(e)
+		}
+	}
+
+	return g, startReleaserFunc, err
 }
 
 func (g *Goxcel) init() error {
@@ -70,16 +84,20 @@ func (g *Goxcel) init() error {
 	return nil
 }
 
-func (g *Goxcel) release(withQuit bool) {
-	defer ole.CoUninitialize()
-	defer g.excel.Release()
-
-	if withQuit {
-		defer func() {
-			err := g.Quit()
-			log.Println(err)
-		}()
+func (g *Goxcel) quit() error {
+	_, err := oleutil.CallMethod(g.excel, "Quit")
+	if err != nil {
+		return err
 	}
+
+	return nil
+}
+
+func (g *Goxcel) release() error {
+	g.excel.Release()
+	ole.CoUninitialize()
+
+	return nil
 }
 
 func (g *Goxcel) Visible(value bool) error {
@@ -100,13 +118,4 @@ func (g *Goxcel) Workbooks() (*Workbooks, error) {
 	g.workbooks = NewWorkbooks(g, wb.ToIDispatch())
 
 	return g.workbooks, nil
-}
-
-func (g *Goxcel) Quit() error {
-	_, err := oleutil.CallMethod(g.excel, "Quit")
-	if err != nil {
-		return err
-	}
-
-	return nil
 }

@@ -13,7 +13,17 @@ type (
 )
 
 func NewCell(ws *Worksheet, c *ole.IDispatch) *Cell {
-	return &Cell{ws: ws, c: c}
+	cell := &Cell{
+		ws: ws,
+		c:  c,
+	}
+
+	releaser.Add(func() error {
+		cell.c.Release()
+		return nil
+	})
+
+	return cell
 }
 
 func (c *Cell) Value() (interface{}, error) {
