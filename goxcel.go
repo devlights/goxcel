@@ -97,3 +97,46 @@ func (g *Goxcel) Workbooks() (*Workbooks, error) {
 
 	return g.workbooks, nil
 }
+
+func (g *Goxcel) ActiveWindow() (*Window, error) {
+	w, err := oleutil.GetProperty(g.ComObject(), "ActiveWindow")
+	if err != nil {
+		return nil, err
+	}
+
+	window := NewWindow(g, w.ToIDispatch())
+
+	return window, nil
+}
+
+func (g *Goxcel) ActiveWorkbook() (*Workbook, error) {
+	wbs, err := g.Workbooks()
+	if err != nil {
+		return nil, err
+	}
+
+	w, err := oleutil.GetProperty(g.ComObject(), "ActiveWorkbook")
+	if err != nil {
+		return nil, err
+	}
+
+	workbook := NewWorkbook(wbs, w.ToIDispatch())
+
+	return workbook, nil
+}
+
+func (g *Goxcel) ActiveSheet() (*Worksheet, error) {
+	wb, err := g.ActiveWorkbook()
+	if err != nil {
+		return nil, err
+	}
+
+	s, err := oleutil.GetProperty(g.ComObject(), "ActiveSheet")
+	if err != nil {
+		return nil, err
+	}
+
+	sheet := NewWorksheet(wb, s.ToIDispatch())
+
+	return sheet, nil
+}
