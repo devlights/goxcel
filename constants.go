@@ -11,3 +11,13 @@ const (
 	XlFileFormatXlOpenXMLWorkbook XlFileFormat = 51
 	XlFileFormatXlExcel8          XlFileFormat = 56
 )
+
+type XlPageOrientation int
+
+// XlPageOrientation
+//   - https://docs.microsoft.com/ja-jp/office/vba/api/excel.xlpageorientation
+//noinspection GoUnusedConst
+const (
+	XlPageOrientationXlPortrait  XlPageOrientation = 1
+	XlPageOrientationXlLandscape XlPageOrientation = 2
+)

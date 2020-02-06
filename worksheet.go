@@ -66,3 +66,14 @@ func (ws *Worksheet) Cells(row int, col int) (*Cell, error) {
 
 	return cell, nil
 }
+
+func (ws *Worksheet) PageSetup() (*PageSetup, error) {
+	p, err := oleutil.GetProperty(ws.ComObject(), "PageSetup")
+	if err != nil {
+		return nil, err
+	}
+
+	pagesetup := NewPageSetup(ws, p.ToIDispatch())
+
+	return pagesetup, nil
+}
