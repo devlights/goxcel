@@ -31,6 +31,21 @@ func (ws *Worksheet) ComObject() *ole.IDispatch {
 	return ws.ws
 }
 
+func (ws *Worksheet) Name() (string, error) {
+	v, err := oleutil.GetProperty(ws.ComObject(), "Name")
+	if err != nil {
+		return "", err
+	}
+
+	name := v.Value().(string)
+	return name, nil
+}
+
+func (ws *Worksheet) Activate() error {
+	_, err := oleutil.CallMethod(ws.ComObject(), "Activate")
+	return err
+}
+
 func (ws *Worksheet) Cells(row int, col int) (*Cell, error) {
 	if row <= 0 {
 		e := fmt.Errorf("%w [row]", ValueMustBeGreaterThanZero)

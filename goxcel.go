@@ -6,8 +6,6 @@ import (
 	"log"
 )
 
-type Mode int
-
 var (
 	releaser = NewReleaser()
 )

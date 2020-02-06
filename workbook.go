@@ -31,6 +31,17 @@ func (w *Workbook) ComObject() *ole.IDispatch {
 	return w.wb
 }
 
+func (w *Workbook) WorkSheets() (*Worksheets, error) {
+	wss, err := oleutil.GetProperty(w.ComObject(), "Sheets")
+	if err != nil {
+		return nil, err
+	}
+
+	worksheets := NewWorkSheets(w, wss.ToIDispatch())
+
+	return worksheets, nil
+}
+
 func (w *Workbook) Sheets(index int) (*Worksheet, error) {
 	if index <= 0 {
 		e := fmt.Errorf("%w [index]", ValueMustBeGreaterThanZero)
