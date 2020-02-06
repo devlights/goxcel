@@ -61,7 +61,7 @@ func (g *Goxcel) init() error {
 func (g *Goxcel) quit() error {
 	_, err := oleutil.CallMethod(g.ComObject(), "Quit")
 	if err != nil {
-		return err
+		log.Println(err)
 	}
 
 	return nil
@@ -78,7 +78,12 @@ func (g *Goxcel) ComObject() *ole.IDispatch {
 	return g.excel
 }
 
-func (g *Goxcel) Visible(value bool) error {
+func (g *Goxcel) SetDisplayAlerts(value bool) error {
+	_, err := oleutil.PutProperty(g.ComObject(), "DisplayAlerts", value)
+	return err
+}
+
+func (g *Goxcel) SetVisible(value bool) error {
 	_, err := oleutil.PutProperty(g.ComObject(), "Visible", value)
 	return err
 }

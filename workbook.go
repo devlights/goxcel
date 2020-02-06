@@ -72,7 +72,7 @@ func (w *Workbook) SaveAsWithFileFormat(filePath string, format XlFileFormat) er
 	return err
 }
 
-func (w *Workbook) Saved(value bool) error {
+func (w *Workbook) SetSaved(value bool) error {
 	_, err := oleutil.PutProperty(w.ComObject(), "Saved", value)
 	return err
 }

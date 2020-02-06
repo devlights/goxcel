@@ -16,7 +16,12 @@ func TestGoxcelStartup(t *testing.T) {
 
 	defer r()
 
-	err = g.Visible(true)
+	err = g.SetDisplayAlerts(false)
+	if err != nil {
+		t.Error(err)
+	}
+
+	err = g.SetVisible(true)
 	if err != nil {
 		t.Error(err)
 	}
@@ -33,7 +38,8 @@ func TestGoxcelWorkbooksAdd(t *testing.T) {
 
 	defer r()
 
-	_ = g.Visible(true)
+	_ = g.SetDisplayAlerts(false)
+	_ = g.SetVisible(true)
 
 	wb, err := g.Workbooks()
 	if err != nil {
@@ -47,7 +53,7 @@ func TestGoxcelWorkbooksAdd(t *testing.T) {
 
 	time.Sleep(3 * time.Second)
 
-	err = b.Saved(true)
+	err = b.SetSaved(true)
 	if err != nil {
 		t.Error(err)
 	}
@@ -67,7 +73,8 @@ func TestGoxcelWorkbooksOpen(t *testing.T) {
 
 	defer r()
 
-	_ = g.Visible(true)
+	_ = g.SetDisplayAlerts(false)
+	_ = g.SetVisible(true)
 
 	wb, err := g.Workbooks()
 	if err != nil {
@@ -83,7 +90,7 @@ func TestGoxcelWorkbooksOpen(t *testing.T) {
 
 	time.Sleep(3 * time.Second)
 
-	err = b.Saved(true)
+	err = b.SetSaved(true)
 	if err != nil {
 		t.Error(err)
 	}
@@ -103,7 +110,8 @@ func TestGoxcelWorkbookSave(t *testing.T) {
 
 	defer r()
 
-	_ = g.Visible(true)
+	_ = g.SetDisplayAlerts(false)
+	_ = g.SetVisible(true)
 
 	wbs, err := g.Workbooks()
 	if err != nil {
@@ -116,7 +124,7 @@ func TestGoxcelWorkbookSave(t *testing.T) {
 
 	ws, _ := wb.Sheets(1)
 	c, _ := ws.Cells(1, 1)
-	_ = c.SetValue("hello goxcel")
+	_ = c.SetValue("こんにちわ goxcel")
 
 	err = wb.Save()
 	if err != nil {
@@ -125,7 +133,7 @@ func TestGoxcelWorkbookSave(t *testing.T) {
 
 	time.Sleep(3 * time.Second)
 
-	_ = wb.Saved(true)
+	_ = wb.SetSaved(true)
 	_ = wb.Close()
 }
 
@@ -138,7 +146,8 @@ func TestGoxcelWorkbookSaveAs(t *testing.T) {
 
 	defer r()
 
-	_ = g.Visible(true)
+	_ = g.SetDisplayAlerts(false)
+	_ = g.SetVisible(true)
 
 	wbs, err := g.Workbooks()
 	if err != nil {
@@ -161,7 +170,7 @@ func TestGoxcelWorkbookSaveAs(t *testing.T) {
 
 	time.Sleep(3 * time.Second)
 
-	_ = wb.Saved(true)
+	_ = wb.SetSaved(true)
 	_ = wb.Close()
 }
 
@@ -173,7 +182,8 @@ func TestGoxcelCellValue(t *testing.T) {
 
 	defer r()
 
-	_ = g.Visible(true)
+	_ = g.SetDisplayAlerts(false)
+	_ = g.SetVisible(true)
 	wbs, _ := g.Workbooks()
 	wb, _ := wbs.Add()
 
@@ -205,7 +215,7 @@ func TestGoxcelCellValue(t *testing.T) {
 
 	time.Sleep(3 * time.Second)
 
-	err = wb.Saved(true)
+	err = wb.SetSaved(true)
 	if err != nil {
 		t.Error(err)
 	}
