@@ -27,13 +27,17 @@ func NewWorkbook(wbs *Workbooks, wb *ole.IDispatch) *Workbook {
 	return b
 }
 
+func (w *Workbook) ComObject() *ole.IDispatch {
+	return w.wb
+}
+
 func (w *Workbook) Sheets(index int) (*Worksheet, error) {
 	if index <= 0 {
 		e := fmt.Errorf("%w [index]", ValueMustBeGreaterThanZero)
 		return nil, e
 	}
 
-	s, err := oleutil.GetProperty(w.wb, "Worksheets", index)
+	s, err := oleutil.GetProperty(w.ComObject(), "Worksheets", index)
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +48,7 @@ func (w *Workbook) Sheets(index int) (*Worksheet, error) {
 }
 
 func (w *Workbook) Save() error {
-	_, err := oleutil.CallMethod(w.wb, "Save")
+	_, err := oleutil.CallMethod(w.ComObject(), "Save")
 	return err
 }
 
@@ -53,16 +57,16 @@ func (w *Workbook) SaveAs(filePath string) error {
 }
 
 func (w *Workbook) SaveAsWithFileFormat(filePath string, format XlFileFormat) error {
-	_, err := oleutil.CallMethod(w.wb, "SaveAs", filePath, int(format))
+	_, err := oleutil.CallMethod(w.ComObject(), "SaveAs", filePath, int(format))
 	return err
 }
 
 func (w *Workbook) Saved(value bool) error {
-	_, err := oleutil.PutProperty(w.wb, "Saved", value)
+	_, err := oleutil.PutProperty(w.ComObject(), "Saved", value)
 	return err
 }
 
 func (w *Workbook) Close() error {
-	_, err := oleutil.CallMethod(w.wb, "Close", false)
+	_, err := oleutil.CallMethod(w.ComObject(), "Close", false)
 	return err
 }

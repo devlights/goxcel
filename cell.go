@@ -26,8 +26,12 @@ func NewCell(ws *Worksheet, c *ole.IDispatch) *Cell {
 	return cell
 }
 
+func (c *Cell) ComObject() *ole.IDispatch {
+	return c.c
+}
+
 func (c *Cell) Value() (interface{}, error) {
-	v, err := oleutil.GetProperty(c.c, "Value")
+	v, err := oleutil.GetProperty(c.ComObject(), "Value")
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +40,7 @@ func (c *Cell) Value() (interface{}, error) {
 }
 
 func (c *Cell) SetValue(value interface{}) error {
-	_, err := oleutil.PutProperty(c.c, "Value", value)
+	_, err := oleutil.PutProperty(c.ComObject(), "Value", value)
 	if err != nil {
 		return err
 	}
