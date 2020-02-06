@@ -49,7 +49,11 @@ func (w *Workbook) Save() error {
 }
 
 func (w *Workbook) SaveAs(filePath string) error {
-	_, err := oleutil.CallMethod(w.wb, "SaveAs", filePath, XlFileFormatXlWorkbookDefault)
+	return w.SaveAsWithFileFormat(filePath, XlFileFormatXlOpenXMLWorkbook)
+}
+
+func (w *Workbook) SaveAsWithFileFormat(filePath string, format XlFileFormat) error {
+	_, err := oleutil.CallMethod(w.wb, "SaveAs", filePath, int(format))
 	return err
 }
 

@@ -129,6 +129,42 @@ func TestGoxcelWorkbookSave(t *testing.T) {
 	_ = wb.Close()
 }
 
+func TestGoxcelWorkbookSaveAs(t *testing.T) {
+	g, r, err := NewGoxcel()
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	defer r()
+
+	_ = g.Visible(true)
+
+	wbs, err := g.Workbooks()
+	if err != nil {
+		t.Error(err)
+	}
+
+	userHomeDir, _ := os.UserHomeDir()
+	srcXlsxPath := filepath.Join(userHomeDir, "Book1.xlsx")
+	wb, _ := wbs.Open(srcXlsxPath)
+
+	ws, _ := wb.Sheets(1)
+	c, _ := ws.Cells(1, 1)
+	_ = c.SetValue("hello goxcel")
+
+	dstXlsxPath := filepath.Join(userHomeDir, "Book2.xlsx")
+	err = wb.SaveAs(dstXlsxPath)
+	if err != nil {
+		t.Error(err)
+	}
+
+	time.Sleep(3 * time.Second)
+
+	_ = wb.Saved(true)
+	_ = wb.Close()
+}
+
 func TestGoxcelCellValue(t *testing.T) {
 	g, r, err := NewGoxcel()
 	if err != nil {
