@@ -30,6 +30,8 @@ func TestGoxcelStartup(t *testing.T) {
 }
 
 func TestGoxcelWorkbooksAdd(t *testing.T) {
+	time.Sleep(3 * time.Second)
+
 	g, r, err := NewGoxcel()
 
 	if err != nil {
@@ -62,9 +64,13 @@ func TestGoxcelWorkbooksAdd(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+
+	time.Sleep(3 * time.Second)
 }
 
 func TestGoxcelWorkbooksOpen(t *testing.T) {
+	time.Sleep(3 * time.Second)
+
 	g, r, err := NewGoxcel()
 
 	if err != nil {
@@ -99,9 +105,13 @@ func TestGoxcelWorkbooksOpen(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+
+	time.Sleep(3 * time.Second)
 }
 
 func TestGoxcelWorkbookSave(t *testing.T) {
+	time.Sleep(3 * time.Second)
+
 	g, r, err := NewGoxcel()
 
 	if err != nil {
@@ -135,9 +145,13 @@ func TestGoxcelWorkbookSave(t *testing.T) {
 
 	_ = wb.SetSaved(true)
 	_ = wb.Close()
+
+	time.Sleep(3 * time.Second)
 }
 
 func TestGoxcelWorkbookSaveAs(t *testing.T) {
+	time.Sleep(3 * time.Second)
+
 	g, r, err := NewGoxcel()
 
 	if err != nil {
@@ -172,9 +186,13 @@ func TestGoxcelWorkbookSaveAs(t *testing.T) {
 
 	_ = wb.SetSaved(true)
 	_ = wb.Close()
+
+	time.Sleep(3 * time.Second)
 }
 
 func TestGoxcelCellValue(t *testing.T) {
+	time.Sleep(3 * time.Second)
+
 	g, r, err := NewGoxcel()
 	if err != nil {
 		t.Error(err)
@@ -224,4 +242,6 @@ func TestGoxcelCellValue(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+
+	time.Sleep(3 * time.Second)
 }

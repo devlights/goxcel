@@ -24,8 +24,12 @@ func NewGoxcel() (*Goxcel, ReleaseFunc, error) {
 
 	err := g.init()
 
-	releaser.Add(g.quit)
-	releaser.Add(g.release)
+	releaser.Add(func() error {
+		_ = g.quit()
+		_ = g.release()
+
+		return nil
+	})
 
 	startReleaserFunc := func() {
 		e := releaser.Release()
