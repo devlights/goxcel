@@ -43,6 +43,16 @@ func (w *Workbook) Sheets(index int) (*Worksheet, error) {
 	return ws, nil
 }
 
+func (w *Workbook) Save() error {
+	_, err := oleutil.CallMethod(w.wb, "Save")
+	return err
+}
+
+func (w *Workbook) SaveAs(filePath string) error {
+	_, err := oleutil.CallMethod(w.wb, "SaveAs", filePath, XlFileFormatXlWorkbookDefault)
+	return err
+}
+
 func (w *Workbook) Saved(value bool) error {
 	_, err := oleutil.PutProperty(w.wb, "Saved", value)
 	return err
