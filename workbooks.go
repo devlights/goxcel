@@ -27,12 +27,23 @@ func NewWorkbooks(g *Goxcel, wb *ole.IDispatch) *Workbooks {
 }
 
 func (w *Workbooks) Add() (*Workbook, error) {
-	b, err := oleutil.CallMethod(w.wb, "Add", nil)
+	wb, err := oleutil.CallMethod(w.wb, "Add", nil)
 	if err != nil {
 		return nil, err
 	}
 
-	workbook := NewWorkbook(w, b.ToIDispatch())
+	workbook := NewWorkbook(w, wb.ToIDispatch())
+
+	return workbook, nil
+}
+
+func (w *Workbooks) Open(filePath string) (*Workbook, error) {
+	wb, err := oleutil.CallMethod(w.wb, "Open", filePath)
+	if err != nil {
+		return nil, err
+	}
+
+	workbook := NewWorkbook(w, wb.ToIDispatch())
 
 	return workbook, nil
 }

@@ -1,13 +1,14 @@
 package goxcel
 
 import (
+	"os"
+	"path/filepath"
 	"testing"
 	"time"
 )
 
 func TestGoxcelStartup(t *testing.T) {
-	a := NewArgs("")
-	g, r, err := NewGoxcel(a)
+	g, r, err := NewGoxcel()
 
 	if err != nil {
 		t.Error(err)
@@ -23,9 +24,8 @@ func TestGoxcelStartup(t *testing.T) {
 	time.Sleep(3 * time.Second)
 }
 
-func TestGoxcelWorkbooks(t *testing.T) {
-	a := NewArgs("")
-	g, r, err := NewGoxcel(a)
+func TestGoxcelWorkbooksAdd(t *testing.T) {
+	g, r, err := NewGoxcel()
 
 	if err != nil {
 		t.Error(err)
@@ -58,8 +58,44 @@ func TestGoxcelWorkbooks(t *testing.T) {
 	}
 }
 
+func TestGoxcelWorkbooksOpen(t *testing.T) {
+	g, r, err := NewGoxcel()
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	defer r()
+
+	_ = g.Visible(true)
+
+	wb, err := g.Workbooks()
+	if err != nil {
+		t.Error(err)
+	}
+
+	userHomeDir, _ := os.UserHomeDir()
+	xlsxPath := filepath.Join(userHomeDir, "Book1.xlsx")
+	b, err := wb.Open(xlsxPath)
+	if err != nil {
+		t.Error(err)
+	}
+
+	time.Sleep(3 * time.Second)
+
+	err = b.Saved(true)
+	if err != nil {
+		t.Error(err)
+	}
+
+	err = b.Close()
+	if err != nil {
+		t.Error(err)
+	}
+}
+
 func TestGoxcelCellValue(t *testing.T) {
-	g, r, err := NewGoxcel(NewArgs(""))
+	g, r, err := NewGoxcel()
 	if err != nil {
 		t.Error(err)
 	}

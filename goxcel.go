@@ -8,45 +8,21 @@ import (
 
 type Mode int
 
-const (
-	ModeNew Mode = iota
-	ModeOpen
-)
-
 var (
 	releaser = NewReleaser()
 )
 
 type (
 	Goxcel struct {
-		Args      *Args
 		excel     *ole.IDispatch
 		workbooks *Workbooks
-	}
-
-	Args struct {
-		FilePath string
-		FileMode Mode
 	}
 
 	ReleaseFunc func()
 )
 
-func NewArgs(filePath string) *Args {
-	a := new(Args)
-	a.FilePath = filePath
-
-	a.FileMode = ModeOpen
-	if a.FilePath == "" {
-		a.FileMode = ModeNew
-	}
-
-	return a
-}
-
-func NewGoxcel(args *Args) (*Goxcel, ReleaseFunc, error) {
+func NewGoxcel() (*Goxcel, ReleaseFunc, error) {
 	g := new(Goxcel)
-	g.Args = args
 
 	err := g.init()
 
