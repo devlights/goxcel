@@ -77,7 +77,7 @@ func (g *Goxcel) release(withQuit bool) {
 	if withQuit {
 		defer func() {
 			err := g.Quit()
-			log.Fatal(err)
+			log.Println(err)
 		}()
 	}
 }
