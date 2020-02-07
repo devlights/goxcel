@@ -55,3 +55,8 @@ func (c *Cell) SetValue(value interface{}) error {
 
 	return nil
 }
+
+func (c *Cell) Select() error {
+	_, err := oleutil.CallMethod(c.ComObject(), "Select")
+	return err
+}
