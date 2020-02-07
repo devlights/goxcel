@@ -24,6 +24,10 @@ test:
 clean:
 	$(GOCLEAN) $(CMD_PKG)
 
-.PHONY: footer_adjust_example
-footer_adjust_example:
-	$(GORUN) examples/sheet_footer_adjust/footer_adjust.go -d ${TARGET_DIR} -p ${SHEET_PATTERN} -f ${FOOTER}
+.PHONY: sheet_footer_adjust_example
+sheet_footer_adjust_example:
+	$(GORUN) examples/sheet_footer_adjust/sheet_footer_adjust.go -d ${TARGET_DIR} -f ${FOOTER}
+
+.PHONY: printer_orientation_example
+printer_orientation_example:
+	$(GORUN) examples/printer_orientation_adjust/printer_orientation_adjust.go -d ${TARGET_DIR} -o ${ORIENTATION}
