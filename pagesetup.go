@@ -30,6 +30,10 @@ func (p *PageSetup) ComObject() *ole.IDispatch {
 	return p.ps
 }
 
+func (p *PageSetup) Goxcel() *Goxcel {
+	return p.ws.wb.wbs.g
+}
+
 func (p *PageSetup) SetOrientation(value XlPageOrientation) error {
 	_, err := oleutil.PutProperty(p.ComObject(), "Orientation", int(value))
 	return err

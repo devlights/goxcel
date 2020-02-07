@@ -6,4 +6,8 @@ type (
 	HasComObject interface {
 		ComObject() *ole.IDispatch
 	}
+
+	HasGoxcel interface {
+		Goxcel() *Goxcel
+	}
 )

@@ -30,6 +30,10 @@ func (w *Window) ComObject() *ole.IDispatch {
 	return w.w
 }
 
+func (w *Window) Goxcel() *Goxcel {
+	return w.g
+}
+
 func (w *Window) SetZoom(zoomRate int) error {
 	_, err := oleutil.PutProperty(w.ComObject(), "Zoom", zoomRate)
 	return err

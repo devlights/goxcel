@@ -31,6 +31,10 @@ func (w *Workbook) ComObject() *ole.IDispatch {
 	return w.wb
 }
 
+func (w *Workbook) Goxcel() *Goxcel {
+	return w.wbs.g
+}
+
 func (w *Workbook) WorkSheets() (*Worksheets, error) {
 	wss, err := oleutil.GetProperty(w.ComObject(), "Sheets")
 	if err != nil {

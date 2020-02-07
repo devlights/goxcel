@@ -30,6 +30,10 @@ func (w *Workbooks) ComObject() *ole.IDispatch {
 	return w.wbs
 }
 
+func (w *Workbooks) Goxcel() *Goxcel {
+	return w.g
+}
+
 func (w *Workbooks) Add() (*Workbook, error) {
 	wb, err := oleutil.CallMethod(w.ComObject(), "Add", nil)
 	if err != nil {

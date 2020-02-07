@@ -30,6 +30,10 @@ func (c *Cell) ComObject() *ole.IDispatch {
 	return c.c
 }
 
+func (c *Cell) Goxcel() *Goxcel {
+	return c.ws.wb.wbs.g
+}
+
 func (c *Cell) Value() (interface{}, error) {
 	v, err := oleutil.GetProperty(c.ComObject(), "Value")
 	if err != nil {
