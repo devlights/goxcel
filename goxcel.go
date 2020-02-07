@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	releaser = NewReleaser()
+	_releaser = NewReleaser()
 )
 
 type (
@@ -24,7 +24,7 @@ func NewGoxcel() (*Goxcel, ReleaseFunc, error) {
 
 	err := g.init()
 
-	releaser.Add(func() error {
+	g.Releaser().Add(func() error {
 		_ = g.quit()
 		_ = g.release()
 
@@ -32,7 +32,7 @@ func NewGoxcel() (*Goxcel, ReleaseFunc, error) {
 	})
 
 	startReleaserFunc := func() {
-		e := releaser.Release()
+		e := g.Releaser().Release()
 		if e != nil {
 			log.Println(e)
 		}
@@ -80,6 +80,10 @@ func (g *Goxcel) release() error {
 
 func (g *Goxcel) ComObject() *ole.IDispatch {
 	return g.excel
+}
+
+func (g *Goxcel) Releaser() *Releaser {
+	return _releaser
 }
 
 func (g *Goxcel) SetDisplayAlerts(value bool) error {

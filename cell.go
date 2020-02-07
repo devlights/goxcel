@@ -18,7 +18,7 @@ func NewCell(ws *Worksheet, c *ole.IDispatch) *Cell {
 		c:  c,
 	}
 
-	releaser.Add(func() error {
+	cell.Releaser().Add(func() error {
 		cell.c.Release()
 		return nil
 	})
@@ -32,6 +32,10 @@ func (c *Cell) ComObject() *ole.IDispatch {
 
 func (c *Cell) Goxcel() *Goxcel {
 	return c.ws.wb.wbs.g
+}
+
+func (c *Cell) Releaser() *Releaser {
+	return c.Goxcel().Releaser()
 }
 
 func (c *Cell) Value() (interface{}, error) {

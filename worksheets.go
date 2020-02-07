@@ -19,7 +19,7 @@ func NewWorkSheets(wb *Workbook, wss *ole.IDispatch) *Worksheets {
 		wb:  wb,
 	}
 
-	releaser.Add(func() error {
+	w.Releaser().Add(func() error {
 		w.ComObject().Release()
 		return nil
 	})
@@ -33,6 +33,10 @@ func (w *Worksheets) ComObject() *ole.IDispatch {
 
 func (w *Worksheets) Goxcel() *Goxcel {
 	return w.wb.wbs.g
+}
+
+func (w *Worksheets) Releaser() *Releaser {
+	return w.Goxcel().Releaser()
 }
 
 func (w *Worksheets) Count() (int64, error) {

@@ -18,7 +18,7 @@ func NewPageSetup(ws *Worksheet, ps *ole.IDispatch) *PageSetup {
 		ws: ws,
 	}
 
-	releaser.Add(func() error {
+	p.Releaser().Add(func() error {
 		p.ps.Release()
 		return nil
 	})
@@ -32,6 +32,10 @@ func (p *PageSetup) ComObject() *ole.IDispatch {
 
 func (p *PageSetup) Goxcel() *Goxcel {
 	return p.ws.wb.wbs.g
+}
+
+func (p *PageSetup) Releaser() *Releaser {
+	return p.Goxcel().Releaser()
 }
 
 func (p *PageSetup) SetOrientation(value XlPageOrientation) error {

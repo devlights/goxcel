@@ -18,7 +18,7 @@ func NewWindow(g *Goxcel, w *ole.IDispatch) *Window {
 		w: w,
 	}
 
-	releaser.Add(func() error {
+	win.Releaser().Add(func() error {
 		win.w.Release()
 		return nil
 	})
@@ -32,6 +32,10 @@ func (w *Window) ComObject() *ole.IDispatch {
 
 func (w *Window) Goxcel() *Goxcel {
 	return w.g
+}
+
+func (w *Window) Releaser() *Releaser {
+	return w.Goxcel().Releaser()
 }
 
 func (w *Window) SetZoom(zoomRate int) error {
