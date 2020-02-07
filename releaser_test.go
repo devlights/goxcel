@@ -2,6 +2,25 @@ package goxcel
 
 import "testing"
 
+func TestReleaser_Count(t *testing.T) {
+	releaser := NewReleaser()
+
+	f1 := func() error {
+		return nil
+	}
+
+	f2 := func() error {
+		return nil
+	}
+
+	releaser.Add(f1)
+	releaser.Add(f2)
+
+	if releaser.Count() != 2 {
+		t.Errorf("want: %d\tgot: %d", 2, releaser.Count())
+	}
+}
+
 func TestReleaser_Release(t *testing.T) {
 	data1 := make([]string, 0, 0)
 	data2 := []string{

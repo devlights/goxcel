@@ -2,7 +2,6 @@ package goxcel
 
 import (
 	"log"
-	"sort"
 )
 
 type (
@@ -22,17 +21,24 @@ func (r *Releaser) Add(f func() error) {
 	r.items = append(r.items, f)
 }
 
-func (r *Releaser) Release() error {
-	// reverse sort
-	sort.Slice(r.items, func(i, j int) bool {
-		return !(i < j)
-	})
+func (r *Releaser) Count() int {
+	return len(r.items)
+}
 
-	for _, f := range r.items {
+func (r *Releaser) Release() error {
+
+	// Pop elements
+	for r.Count() > 0 {
+		index := r.Count() - 1
+		f := r.items[index]
+
 		err := f()
 		if err != nil {
 			log.Println(err)
 		}
+
+		r.items[index] = nil
+		r.items = r.items[:index]
 	}
 
 	r.items = make([]func() error, 0, 256)
