@@ -66,3 +66,25 @@ func (w *Worksheets) Add() (*Worksheet, error) {
 
 	return worksheet, nil
 }
+
+func (w *Worksheets) Walk(walkFn func(ws *Worksheet) error) (*Worksheet, error) {
+	c, err := w.Count()
+	if err != nil {
+		return nil, err
+	}
+
+	count := int(c)
+	for i := 0; i < count; i++ {
+		ws, err := w.Item(i + 1)
+		if err != nil {
+			return nil, err
+		}
+
+		err = walkFn(ws)
+		if err != nil {
+			return ws, err
+		}
+	}
+
+	return nil, nil
+}

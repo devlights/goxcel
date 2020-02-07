@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/devlights/goxcel"
 	"log"
 	"os"
@@ -70,13 +71,7 @@ func main() {
 			return err
 		}
 
-		sheetCount, _ := wss.Count()
-		for i := 0; i < int(sheetCount); i++ {
-			ws, err := wss.Item(i + 1)
-			if err != nil {
-				return err
-			}
-
+		errorWs, err := wss.Walk(func(ws *goxcel.Worksheet) error {
 			err = ws.Activate()
 			if err != nil {
 				return err
@@ -85,7 +80,7 @@ func main() {
 			if sheetPattern != "" {
 				name, _ := ws.Name()
 				if !strings.Contains(name, sheetPattern) {
-					continue
+					return nil
 				}
 			}
 
@@ -98,6 +93,18 @@ func main() {
 			if err != nil {
 				return err
 			}
+
+			return nil
+		})
+
+		if err != nil {
+			errSheetName := ""
+			if errorWs != nil {
+				errSheetName, _ = errorWs.Name()
+			}
+
+			err = fmt.Errorf("%w at sheet[%s]", err, errSheetName)
+			return err
 		}
 
 		err = wb.Save()
