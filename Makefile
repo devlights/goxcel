@@ -31,3 +31,7 @@ sheet_footer_adjust_example:
 .PHONY: printer_orientation_example
 printer_orientation_example:
 	$(GORUN) examples/printer_orientation_adjust/printer_orientation_adjust.go -d ${TARGET_DIR} -o ${ORIENTATION}
+
+.PHONY: sheet_zoom_example
+sheet_zoom_example:
+	$(GORUN) examples/sheet_zoom_adjust/sheet_zoom_adjust.go -d ${TARGET_DIR} -z ${ZOOM}
