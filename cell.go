@@ -19,7 +19,7 @@ func NewCell(ws *Worksheet, c *ole.IDispatch) *Cell {
 	}
 
 	cell.Releaser().Add(func() error {
-		cell.c.Release()
+		cell.ComObject().Release()
 		return nil
 	})
 
