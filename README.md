@@ -1,6 +1,6 @@
-# goxcel
+# Goxcel
 
-goxcel is a library to operate Excel.
+Goxcel is a library to operate Excel.
 
 This library works only on Windows.
 
