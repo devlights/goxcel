@@ -35,3 +35,7 @@ printer_orientation_example:
 .PHONY: sheet_zoom_example
 sheet_zoom_example:
 	$(GORUN) examples/sheet_zoom_adjust/sheet_zoom_adjust.go -d ${TARGET_DIR} -z ${ZOOM}
+
+.PHONY: select_first_cell_example
+select_first_cell_example:
+	$(GORUN) examples/select_first_cell/select_first_cell.go -d ${TARGET_DIR}
