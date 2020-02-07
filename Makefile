@@ -9,12 +9,6 @@ PRJ_NAME=goxcel
 GITHUB_USER=devlights
 PKG_NAME=github.com/$(GITHUB_USER)/$(PRJ_NAME)
 
-ifdef ComSpec
-	SEP=\\
-else
-	SEP=/
-endif
-
 .PHONY: all
 all: clean build test
 
@@ -29,3 +23,7 @@ test:
 .PHONY: clean
 clean:
 	$(GOCLEAN) $(CMD_PKG)
+
+.PHONY: footer_adjust_example
+footer_adjust_example:
+	$(GORUN) examples/sheet_footer_adjust/footer_adjust.go -d ${TARGET_DIR} -p ${SHEET_PATTERN} -f ${FOOTER}
