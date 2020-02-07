@@ -20,7 +20,7 @@ func NewWorksheet(wb *Workbook, ws *ole.IDispatch) *Worksheet {
 	}
 
 	s.Releaser().Add(func() error {
-		s.ws.Release()
+		s.ComObject().Release()
 		return nil
 	})
 

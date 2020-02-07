@@ -19,7 +19,7 @@ func NewWindow(g *Goxcel, w *ole.IDispatch) *Window {
 	}
 
 	win.Releaser().Add(func() error {
-		win.w.Release()
+		win.ComObject().Release()
 		return nil
 	})
 

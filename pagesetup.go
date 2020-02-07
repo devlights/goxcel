@@ -19,7 +19,7 @@ func NewPageSetup(ws *Worksheet, ps *ole.IDispatch) *PageSetup {
 	}
 
 	p.Releaser().Add(func() error {
-		p.ps.Release()
+		p.ComObject().Release()
 		return nil
 	})
 

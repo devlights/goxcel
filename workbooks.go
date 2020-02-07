@@ -19,7 +19,7 @@ func NewWorkbooks(g *Goxcel, wbs *ole.IDispatch) *Workbooks {
 	}
 
 	w.Releaser().Add(func() error {
-		w.wbs.Release()
+		w.ComObject().Release()
 		return nil
 	})
 
