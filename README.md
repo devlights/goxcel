@@ -1,6 +1,6 @@
-# goxcel
+# Goxcel
 
-goxcel is a library to operate Excel made in Golang.
+Goxcel is a library to operate Excel using go-ole library.
 
 This library works only on Windows.
 
