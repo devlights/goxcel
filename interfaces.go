@@ -14,4 +14,9 @@ type (
 	HasGoxcel interface {
 		Goxcel() *Goxcel
 	}
+
+	ComObject interface {
+		HasReleaser
+		HasComObject
+	}
 )
