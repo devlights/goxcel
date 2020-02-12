@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 var (
@@ -36,6 +37,10 @@ func walkFiles(path string, info os.FileInfo, err error) error {
 	}
 
 	if info.IsDir() {
+		return nil
+	}
+
+	if !strings.HasSuffix(path, "xlsx") {
 		return nil
 	}
 
