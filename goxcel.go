@@ -12,8 +12,7 @@ var (
 
 type (
 	Goxcel struct {
-		excel     *ole.IDispatch
-		workbooks *Workbooks
+		excel *ole.IDispatch
 	}
 
 	ReleaseFunc func()
@@ -97,18 +96,14 @@ func (g *Goxcel) SetVisible(value bool) error {
 }
 
 func (g *Goxcel) Workbooks() (*Workbooks, error) {
-	if g.workbooks != nil {
-		return g.workbooks, nil
-	}
-
 	wb, err := oleutil.GetProperty(g.ComObject(), "Workbooks")
 	if err != nil {
 		return nil, err
 	}
 
-	g.workbooks = NewWorkbooks(g, wb.ToIDispatch())
+	workbooks := NewWorkbooks(g, wb.ToIDispatch())
 
-	return g.workbooks, nil
+	return workbooks, nil
 }
 
 func (g *Goxcel) ActiveWindow() (*Window, error) {
