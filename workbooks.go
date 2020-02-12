@@ -38,24 +38,24 @@ func (w *Workbooks) Releaser() *Releaser {
 	return w.Goxcel().Releaser()
 }
 
-func (w *Workbooks) Add() (*Workbook, error) {
+func (w *Workbooks) Add() (*Workbook, ReleaseFunc, error) {
 	wb, err := oleutil.CallMethod(w.ComObject(), "Add", nil)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	workbook := NewWorkbook(w, wb.ToIDispatch())
+	workbook, releaseFn := NewWorkbook(w, wb.ToIDispatch())
 
-	return workbook, nil
+	return workbook, releaseFn, nil
 }
 
-func (w *Workbooks) Open(filePath string) (*Workbook, error) {
+func (w *Workbooks) Open(filePath string) (*Workbook, ReleaseFunc, error) {
 	wb, err := oleutil.CallMethod(w.ComObject(), "Open", filePath)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	workbook := NewWorkbook(w, wb.ToIDispatch())
+	workbook, releaseFn := NewWorkbook(w, wb.ToIDispatch())
 
-	return workbook, nil
+	return workbook, releaseFn, nil
 }

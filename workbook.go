@@ -13,7 +13,7 @@ type (
 	}
 )
 
-func NewWorkbook(wbs *Workbooks, wb *ole.IDispatch) *Workbook {
+func NewWorkbook(wbs *Workbooks, wb *ole.IDispatch) (*Workbook, ReleaseFunc) {
 	b := &Workbook{
 		wbs: wbs,
 		wb:  wb,
@@ -24,7 +24,12 @@ func NewWorkbook(wbs *Workbooks, wb *ole.IDispatch) *Workbook {
 		return nil
 	})
 
-	return b
+	r := func() {
+		_ = b.SetSaved(true)
+		_ = b.Close()
+	}
+
+	return b, r
 }
 
 func (w *Workbook) ComObject() *ole.IDispatch {
