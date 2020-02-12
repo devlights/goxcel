@@ -117,34 +117,34 @@ func (g *Goxcel) ActiveWindow() (*Window, error) {
 	return window, nil
 }
 
-func (g *Goxcel) ActiveWorkbook() (*Workbook, error) {
+func (g *Goxcel) ActiveWorkbook() (*Workbook, ReleaseFunc, error) {
 	wbs, err := g.Workbooks()
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	w, err := oleutil.GetProperty(g.ComObject(), "ActiveWorkbook")
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	workbook := NewWorkbook(wbs, w.ToIDispatch())
+	workbook, wbReleaseFn := NewWorkbook(wbs, w.ToIDispatch())
 
-	return workbook, nil
+	return workbook, wbReleaseFn, nil
 }
 
-func (g *Goxcel) ActiveSheet() (*Worksheet, error) {
-	wb, err := g.ActiveWorkbook()
+func (g *Goxcel) ActiveSheet() (*Worksheet, *Workbook, ReleaseFunc, error) {
+	wb, wbReleaseFn, err := g.ActiveWorkbook()
 	if err != nil {
-		return nil, err
+		return nil, nil, nil, err
 	}
 
 	s, err := oleutil.GetProperty(g.ComObject(), "ActiveSheet")
 	if err != nil {
-		return nil, err
+		return nil, nil, nil, err
 	}
 
 	sheet := NewWorksheet(wb, s.ToIDispatch())
 
-	return sheet, nil
+	return sheet, wb, wbReleaseFn, nil
 }

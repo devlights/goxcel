@@ -29,7 +29,8 @@ func TestWorkbook_Save(t *testing.T) {
 
 	userHomeDir, _ := os.UserHomeDir()
 	xlsxPath := filepath.Join(userHomeDir, "Book1.xlsx")
-	wb, _ := wbs.Open(xlsxPath)
+	wb, wbReleaseFn, _ := wbs.Open(xlsxPath)
+	defer wbReleaseFn()
 
 	ws, _ := wb.Sheets(1)
 	c, _ := ws.Cells(1, 1)
@@ -41,9 +42,6 @@ func TestWorkbook_Save(t *testing.T) {
 	}
 
 	testutil.Interval()
-
-	_ = wb.SetSaved(true)
-	_ = wb.Close()
 }
 
 func TestWorkbook_SaveAs(t *testing.T) {
@@ -68,7 +66,8 @@ func TestWorkbook_SaveAs(t *testing.T) {
 
 	userHomeDir, _ := os.UserHomeDir()
 	srcXlsxPath := filepath.Join(userHomeDir, "Book1.xlsx")
-	wb, _ := wbs.Open(srcXlsxPath)
+	wb, wbReleaseFn, _ := wbs.Open(srcXlsxPath)
+	defer wbReleaseFn()
 
 	ws, _ := wb.Sheets(1)
 	c, _ := ws.Cells(1, 1)
@@ -81,7 +80,4 @@ func TestWorkbook_SaveAs(t *testing.T) {
 	}
 
 	testutil.Interval()
-
-	_ = wb.SetSaved(true)
-	_ = wb.Close()
 }

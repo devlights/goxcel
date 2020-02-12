@@ -68,15 +68,12 @@ func walkFiles(path string, info os.FileInfo, err error) error {
 		return err
 	}
 
-	wb, err := wbs.Open(absPath)
+	wb, wbReleaseFn, err := wbs.Open(absPath)
 	if err != nil {
 		return err
 	}
 
-	defer func() {
-		_ = wb.SetSaved(true)
-		_ = wb.Close()
-	}()
+	defer wbReleaseFn()
 
 	wss, err := wb.WorkSheets()
 	if err != nil {

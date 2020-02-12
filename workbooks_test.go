@@ -27,7 +27,7 @@ func TestWorkbooks_Add(t *testing.T) {
 		t.Error(err)
 	}
 
-	b, err := wb.Add()
+	b, _, err := wb.Add()
 	if err != nil {
 		t.Error(err)
 	}
@@ -67,7 +67,7 @@ func TestWorkbooks_Open(t *testing.T) {
 
 	userHomeDir, _ := os.UserHomeDir()
 	xlsxPath := filepath.Join(userHomeDir, "Book1.xlsx")
-	b, err := wb.Open(xlsxPath)
+	b, _, err := wb.Open(xlsxPath)
 	if err != nil {
 		t.Error(err)
 	}

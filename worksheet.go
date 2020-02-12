@@ -54,7 +54,27 @@ func (ws *Worksheet) Activate() error {
 	return err
 }
 
-func (ws *Worksheet) CellsRange() (*XlRange, error) {
+func (ws *Worksheet) Range(startRow, startCol, endRow, endCol int) (*XlRange, error) {
+	startCell, err := ws.Cells(startRow, startCol)
+	if err != nil {
+		return nil, err
+	}
+
+	endCell, err := ws.Cells(endRow, endCol)
+	if err != nil {
+		return nil, err
+	}
+
+	v, err := oleutil.GetProperty(ws.ComObject(), "Range", startCell.ComObject(), endCell.ComObject())
+	if err != nil {
+		return nil, err
+	}
+
+	newrange := NewRange(ws, v.ToIDispatch())
+	return newrange, nil
+}
+
+func (ws *Worksheet) AllRange() (*XlRange, error) {
 	ra, err := oleutil.GetProperty(ws.ComObject(), "Cells")
 	if err != nil {
 		return nil, err

@@ -18,8 +18,10 @@ func TestCell_Value(t *testing.T) {
 
 	_ = g.SetDisplayAlerts(false)
 	_ = g.SetVisible(true)
+
 	wbs, _ := g.Workbooks()
-	wb, _ := wbs.Add()
+	wb, wbReleaseFn, _ := wbs.Add()
+	defer wbReleaseFn()
 
 	ws, err := wb.Sheets(1)
 	if err != nil {
