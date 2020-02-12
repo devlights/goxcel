@@ -54,6 +54,10 @@ func walkFiles(path string, info os.FileInfo, err error) error {
 		return nil
 	}
 
+	if !strings.HasSuffix(path, "xlsx") {
+		return nil
+	}
+
 	absPath, err := filepath.Abs(path)
 	if err != nil {
 		return err
