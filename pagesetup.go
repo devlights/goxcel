@@ -1,6 +1,7 @@
 package goxcel
 
 import (
+	"github.com/devlights/goxcel/constants"
 	"github.com/go-ole/go-ole"
 	"github.com/go-ole/go-ole/oleutil"
 )
@@ -38,7 +39,7 @@ func (p *PageSetup) Releaser() *Releaser {
 	return p.Goxcel().Releaser()
 }
 
-func (p *PageSetup) SetOrientation(value XlPageOrientation) error {
+func (p *PageSetup) SetOrientation(value constants.XlPageOrientation) error {
 	_, err := oleutil.PutProperty(p.ComObject(), "Orientation", int(value))
 	return err
 }

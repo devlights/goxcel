@@ -2,6 +2,7 @@ package goxcel
 
 import (
 	"fmt"
+	"github.com/devlights/goxcel/constants"
 	"github.com/go-ole/go-ole"
 	"github.com/go-ole/go-ole/oleutil"
 )
@@ -77,10 +78,10 @@ func (w *Workbook) Save() error {
 }
 
 func (w *Workbook) SaveAs(filePath string) error {
-	return w.SaveAsWithFileFormat(filePath, XlFileFormatXlOpenXMLWorkbook)
+	return w.SaveAsWithFileFormat(filePath, constants.XlOpenXMLWorkbook)
 }
 
-func (w *Workbook) SaveAsWithFileFormat(filePath string, format XlFileFormat) error {
+func (w *Workbook) SaveAsWithFileFormat(filePath string, format constants.XlFileFormat) error {
 	_, err := oleutil.CallMethod(w.ComObject(), "SaveAs", filePath, int(format))
 	return err
 }
