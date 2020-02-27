@@ -60,3 +60,17 @@ func (c *Cell) Select() error {
 	_, err := oleutil.CallMethod(c.ComObject(), "Select")
 	return err
 }
+
+func (c *Cell) String() (string, error) {
+	value, err := c.Value()
+	if err != nil {
+		return "", err
+	}
+
+	s, ok := value.(string)
+	if !ok {
+		return "", ValueCantConvertToString
+	}
+
+	return s, nil
+}
