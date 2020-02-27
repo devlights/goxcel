@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/devlights/goxcel"
+	"github.com/devlights/goxcel/constants"
 	"log"
 	"os"
 	"path/filepath"
@@ -127,9 +128,9 @@ func walkSheets(ws *goxcel.Worksheet) error {
 		return err
 	}
 
-	o := goxcel.XlPageOrientationXlPortrait
+	o := constants.XlPortrait
 	if orientation == OrientationLandscape {
-		o = goxcel.XlPageOrientationXlLandscape
+		o = constants.XlLandscape
 	}
 
 	err = ps.SetOrientation(o)
