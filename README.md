@@ -71,8 +71,8 @@ import "github.com/devlights/goxcel"
         // error process
     }
     
-    // 7. Call the Workbook::Saved method to not show a dialog on exit
-    err = wb.Saved(true)
+    // 7. Call the Workbook::SetSaved method to not show a dialog on exit
+    err = wb.SetSaved(true)
     if err != nil {
         // error process
     }
