@@ -45,6 +45,15 @@ func (r *XlRange) Releaser() *Releaser {
 	return r.Goxcel().Releaser()
 }
 
+func (r *XlRange) Clear() error {
+	_, err := oleutil.CallMethod(r.ComObject(), "Clear")
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (r *XlRange) Count() (int64, error) {
 	v, err := oleutil.GetProperty(r.ComObject(), "Count")
 	if err != nil {
