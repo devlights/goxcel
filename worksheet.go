@@ -8,15 +8,15 @@ import (
 
 type (
 	Worksheet struct {
-		wb *Workbook
-		ws *ole.IDispatch
+		goxcelObj GoxcelObject
+		comObj    *ole.IDispatch
 	}
 )
 
-func NewWorksheet(wb *Workbook, ws *ole.IDispatch) *Worksheet {
+func newWorksheet(goxcelObj GoxcelObject, comObj *ole.IDispatch) *Worksheet {
 	s := &Worksheet{
-		wb: wb,
-		ws: ws,
+		goxcelObj: goxcelObj,
+		comObj:    comObj,
 	}
 
 	s.Releaser().Add(func() error {
@@ -27,12 +27,20 @@ func NewWorksheet(wb *Workbook, ws *ole.IDispatch) *Worksheet {
 	return s
 }
 
+func NewWorksheet(wb *Workbook, ws *ole.IDispatch) *Worksheet {
+	return newWorksheet(wb, ws)
+}
+
+func NewWorksheetFromWorksheets(ws *Worksheets, comObj *ole.IDispatch) *Worksheet {
+	return newWorksheet(ws, comObj)
+}
+
 func (ws *Worksheet) ComObject() *ole.IDispatch {
-	return ws.ws
+	return ws.comObj
 }
 
 func (ws *Worksheet) Goxcel() *Goxcel {
-	return ws.wb.wbs.g
+	return ws.goxcelObj.Goxcel()
 }
 
 func (ws *Worksheet) Releaser() *Releaser {

@@ -9,8 +9,8 @@ import (
 
 type (
 	XlRange struct {
-		ws *Worksheet
-		r  *ole.IDispatch
+		goxcelObj GoxcelObject
+		comObj    *ole.IDispatch
 	}
 )
 
@@ -19,10 +19,10 @@ var (
 	SkipCol = errors.New("skip col")
 )
 
-func NewRange(ws *Worksheet, r *ole.IDispatch) *XlRange {
+func newRange(goxcelObj GoxcelObject, comObj *ole.IDispatch) *XlRange {
 	xlrange := &XlRange{
-		ws: ws,
-		r:  r,
+		goxcelObj: goxcelObj,
+		comObj:    comObj,
 	}
 
 	xlrange.Releaser().Add(func() error {
@@ -33,12 +33,20 @@ func NewRange(ws *Worksheet, r *ole.IDispatch) *XlRange {
 	return xlrange
 }
 
+func NewRange(ws *Worksheet, r *ole.IDispatch) *XlRange {
+	return newRange(ws, r)
+}
+
+func NewRangeFromRange(ra *XlRange, c *ole.IDispatch) *XlRange {
+	return newRange(ra, c)
+}
+
 func (r *XlRange) ComObject() *ole.IDispatch {
-	return r.r
+	return r.comObj
 }
 
 func (r *XlRange) Goxcel() *Goxcel {
-	return r.ws.wb.wbs.g
+	return r.goxcelObj.Goxcel()
 }
 
 func (r *XlRange) Releaser() *Releaser {
@@ -81,7 +89,7 @@ func (r *XlRange) Cells(row int, col int) (*Cell, error) {
 		return nil, err
 	}
 
-	cell := NewCell(r.ws, c.ToIDispatch())
+	cell := NewCellFromRange(r, c.ToIDispatch())
 
 	return cell, nil
 }
@@ -103,7 +111,7 @@ func (r *XlRange) Columns() (*XlRange, error) {
 		return nil, err
 	}
 
-	xlrange := NewRange(r.ws, v.ToIDispatch())
+	xlrange := NewRangeFromRange(r, v.ToIDispatch())
 	return xlrange, nil
 }
 
@@ -113,7 +121,7 @@ func (r *XlRange) Rows() (*XlRange, error) {
 		return nil, err
 	}
 
-	xlrange := NewRange(r.ws, v.ToIDispatch())
+	xlrange := NewRangeFromRange(r, v.ToIDispatch())
 	return xlrange, nil
 }
 

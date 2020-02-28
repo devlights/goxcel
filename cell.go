@@ -7,15 +7,15 @@ import (
 
 type (
 	Cell struct {
-		ws *Worksheet
-		c  *ole.IDispatch
+		goxcelObj GoxcelObject
+		comObj    *ole.IDispatch
 	}
 )
 
-func NewCell(ws *Worksheet, c *ole.IDispatch) *Cell {
+func newCell(goxcelObj GoxcelObject, comObj *ole.IDispatch) *Cell {
 	cell := &Cell{
-		ws: ws,
-		c:  c,
+		goxcelObj: goxcelObj,
+		comObj:    comObj,
 	}
 
 	cell.Releaser().Add(func() error {
@@ -26,12 +26,20 @@ func NewCell(ws *Worksheet, c *ole.IDispatch) *Cell {
 	return cell
 }
 
+func NewCell(ws *Worksheet, c *ole.IDispatch) *Cell {
+	return newCell(ws, c)
+}
+
+func NewCellFromRange(ra *XlRange, c *ole.IDispatch) *Cell {
+	return newCell(ra, c)
+}
+
 func (c *Cell) ComObject() *ole.IDispatch {
-	return c.c
+	return c.comObj
 }
 
 func (c *Cell) Goxcel() *Goxcel {
-	return c.ws.wb.wbs.g
+	return c.goxcelObj.Goxcel()
 }
 
 func (c *Cell) Releaser() *Releaser {

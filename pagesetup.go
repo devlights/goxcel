@@ -8,15 +8,15 @@ import (
 
 type (
 	PageSetup struct {
-		ws *Worksheet
-		ps *ole.IDispatch
+		goxcelObj GoxcelObject
+		comObj    *ole.IDispatch
 	}
 )
 
 func NewPageSetup(ws *Worksheet, ps *ole.IDispatch) *PageSetup {
 	p := &PageSetup{
-		ps: ps,
-		ws: ws,
+		comObj:    ps,
+		goxcelObj: ws,
 	}
 
 	p.Releaser().Add(func() error {
@@ -28,11 +28,11 @@ func NewPageSetup(ws *Worksheet, ps *ole.IDispatch) *PageSetup {
 }
 
 func (p *PageSetup) ComObject() *ole.IDispatch {
-	return p.ps
+	return p.comObj
 }
 
 func (p *PageSetup) Goxcel() *Goxcel {
-	return p.ws.wb.wbs.g
+	return p.goxcelObj.Goxcel()
 }
 
 func (p *PageSetup) Releaser() *Releaser {
