@@ -9,7 +9,7 @@ type (
 	ComObjectProcFunc func(c *ole.IDispatch) (interface{}, *ole.IDispatch, error)
 )
 
-func ProcessComObject(com goxcel.ComObject, fn ComObjectProcFunc) (interface{}, *ole.IDispatch, error) {
+func ProcessComObject(com goxcel.ComReleaser, fn ComObjectProcFunc) (interface{}, *ole.IDispatch, error) {
 	v, newComObj, err := fn(com.ComObject())
 	if err != nil {
 		return nil, nil, err

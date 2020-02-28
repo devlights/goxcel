@@ -86,6 +86,17 @@ func (r *XlRange) Cells(row int, col int) (*Cell, error) {
 	return cell, nil
 }
 
+func (r *XlRange) Font() (*Font, error) {
+	v, err := oleutil.GetProperty(r.ComObject(), "Font")
+	if err != nil {
+		return nil, err
+	}
+
+	font := NewFontFromRange(r, v.ToIDispatch())
+
+	return font, nil
+}
+
 func (r *XlRange) Columns() (*XlRange, error) {
 	v, err := oleutil.GetProperty(r.ComObject(), "Columns")
 	if err != nil {

@@ -74,3 +74,14 @@ func (c *Cell) String() (string, error) {
 
 	return s, nil
 }
+
+func (c *Cell) Font() (*Font, error) {
+	v, err := oleutil.GetProperty(c.ComObject(), "Font")
+	if err != nil {
+		return nil, err
+	}
+
+	font := NewFont(c, v.ToIDispatch())
+
+	return font, nil
+}
