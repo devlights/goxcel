@@ -105,6 +105,17 @@ func (r *XlRange) Font() (*Font, error) {
 	return font, nil
 }
 
+func (r *XlRange) Interior() (*Interior, error) {
+	v, err := oleutil.GetProperty(r.ComObject(), "Interior")
+	if err != nil {
+		return nil, err
+	}
+
+	interior := NewInteriorFromRange(r, v.ToIDispatch())
+
+	return interior, nil
+}
+
 func (r *XlRange) Columns() (*XlRange, error) {
 	v, err := oleutil.GetProperty(r.ComObject(), "Columns")
 	if err != nil {
