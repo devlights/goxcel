@@ -77,6 +77,10 @@ func (g *Goxcel) release() error {
 	return nil
 }
 
+func (g *Goxcel) Goxcel() *Goxcel {
+	return g
+}
+
 func (g *Goxcel) ComObject() *ole.IDispatch {
 	return g.excel
 }
