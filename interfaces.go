@@ -2,6 +2,7 @@ package goxcel
 
 import "github.com/go-ole/go-ole"
 
+//noinspection GoNameStartsWithPackageName
 type (
 	HasReleaser interface {
 		Releaser() *Releaser
@@ -15,8 +16,13 @@ type (
 		Goxcel() *Goxcel
 	}
 
-	ComObject interface {
+	ComReleaser interface {
 		HasReleaser
 		HasComObject
+	}
+
+	GoxcelObject interface {
+		HasGoxcel
+		ComReleaser
 	}
 )
