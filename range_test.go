@@ -115,3 +115,36 @@ func TestRange_Font(t *testing.T) {
 		t.Errorf("want: not nil\tgot nil")
 	}
 }
+
+func TestRange_Interior(t *testing.T) {
+	testutil.Interval()
+	defer testutil.Interval()
+
+	// Arrange
+	g, r, _ := NewGoxcel()
+	defer r()
+
+	_ = g.SetDisplayAlerts(false)
+	_ = g.SetVisible(false)
+
+	wbs, _ := g.Workbooks()
+	wb, wbReleaseFn, _ := wbs.Add()
+	defer wbReleaseFn()
+
+	ws, _ := wb.Sheets(1)
+	ra, _ := ws.Range(1, 1, 1, 1)
+	_, _ = ra.Walk(func(xlsRange *XlRange, xlsCell *Cell, row, col int) error {
+		_ = xlsCell.SetValue("helloworld")
+		return nil
+	})
+
+	// Act
+	interior, err := ra.Interior()
+	if err != nil {
+		t.Error(err)
+	}
+
+	if interior == nil {
+		t.Errorf("want: not nil\tgot nil")
+	}
+}

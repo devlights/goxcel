@@ -93,3 +93,14 @@ func (c *Cell) Font() (*Font, error) {
 
 	return font, nil
 }
+
+func (c *Cell) Interior() (*Interior, error) {
+	v, err := oleutil.GetProperty(c.ComObject(), "Interior")
+	if err != nil {
+		return nil, err
+	}
+
+	interior := NewInterior(c, v.ToIDispatch())
+
+	return interior, nil
+}
