@@ -104,7 +104,8 @@ func walkFiles(path string, info os.FileInfo, err error) error {
 	return nil
 }
 
-func walkSheets(ws *goxcel.Worksheet) error {
+//noinspection GoUnusedParameter
+func walkSheets(ws *goxcel.Worksheet, index int) error {
 	err := ws.Activate()
 	if err != nil {
 		return err
