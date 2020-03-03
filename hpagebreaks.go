@@ -75,3 +75,24 @@ func (hpbs *HPageBreaks) Item(index int) (*HPageBreak, error) {
 
 	return hpb, nil
 }
+
+func (hpbs *HPageBreaks) Walk(walkFn func(hpb *HPageBreak, index int) error) (*HPageBreak, error) {
+	count, err := hpbs.Count()
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 1; i <= int(count); i++ {
+		hpb, err := hpbs.Item(i)
+		if err != nil {
+			return nil, err
+		}
+
+		err = walkFn(hpb, i)
+		if err != nil {
+			return hpb, err
+		}
+	}
+
+	return nil, nil
+}

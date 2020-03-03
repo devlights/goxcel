@@ -75,3 +75,24 @@ func (vpbs *VPageBreaks) Item(index int) (*VPageBreak, error) {
 
 	return hpb, nil
 }
+
+func (vpbs *VPageBreaks) Walk(walkFn func(hpb *VPageBreak) error) (*VPageBreak, error) {
+	count, err := vpbs.Count()
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 1; i <= int(count); i++ {
+		hpb, err := vpbs.Item(i)
+		if err != nil {
+			return nil, err
+		}
+
+		err = walkFn(hpb)
+		if err != nil {
+			return hpb, err
+		}
+	}
+
+	return nil, nil
+}
