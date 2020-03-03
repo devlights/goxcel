@@ -23,19 +23,3 @@ test:
 .PHONY: clean
 clean:
 	$(GOCLEAN) $(CMD_PKG)
-
-.PHONY: sheet_footer_adjust_example
-sheet_footer_adjust_example:
-	$(GORUN) examples/sheet_footer_adjust/sheet_footer_adjust.go -d ${TARGET_DIR} -f ${FOOTER}
-
-.PHONY: printer_orientation_example
-printer_orientation_example:
-	$(GORUN) examples/printer_orientation_adjust/printer_orientation_adjust.go -d ${TARGET_DIR} -o ${ORIENTATION}
-
-.PHONY: sheet_zoom_example
-sheet_zoom_example:
-	$(GORUN) examples/sheet_zoom_adjust/sheet_zoom_adjust.go -d ${TARGET_DIR} -z ${ZOOM}
-
-.PHONY: select_first_cell_example
-select_first_cell_example:
-	$(GORUN) examples/select_first_cell/select_first_cell.go -d ${TARGET_DIR}
