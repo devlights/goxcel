@@ -172,6 +172,24 @@ func (r *XlRange) Rows() (*XlRange, error) {
 	return xlrange, nil
 }
 
+func (r *XlRange) Value() (interface{}, error) {
+	v, err := oleutil.GetProperty(r.ComObject(), "Value")
+	if err != nil {
+		return nil, err
+	}
+
+	return v.Value(), nil
+}
+
+func (r *XlRange) SetValue(value interface{}) error {
+	_, err := oleutil.PutProperty(r.ComObject(), "Value", value)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (r *XlRange) Walk(walkFn func(r *XlRange, c *Cell, row, col int) error) (*Cell, error) {
 	rows, err := r.Rows()
 	if err != nil {
