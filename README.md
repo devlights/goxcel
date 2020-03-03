@@ -18,7 +18,10 @@ go get -u github.com/devlights/goxcel
 ### Import statement
 
 ```go
-import "github.com/devlights/goxcel"
+import (
+    "github.com/devlights/goxcel"
+    "github.com/devlights/goxcel/constants"
+)
 ```
 
 ### HelloWorld
