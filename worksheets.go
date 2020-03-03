@@ -75,6 +75,47 @@ func (w *Worksheets) Add() (*Worksheet, error) {
 	return worksheet, nil
 }
 
+func (w *Worksheets) AddBefore(ws *Worksheet) (*Worksheet, error) {
+	v, err := oleutil.CallMethod(w.ComObject(), "Add", ws.ComObject())
+	if err != nil {
+		return nil, err
+	}
+
+	newWs := NewWorksheetFromWorksheets(w, v.ToIDispatch())
+	return newWs, nil
+}
+
+func (w *Worksheets) AddAfter(ws *Worksheet) (*Worksheet, error) {
+	v, err := oleutil.CallMethod(w.ComObject(), "Add", nil, ws.ComObject())
+	if err != nil {
+		return nil, err
+	}
+
+	newWs := NewWorksheetFromWorksheets(w, v.ToIDispatch())
+	return newWs, nil
+}
+
+func (w *Worksheets) AddLast() (*Worksheet, error) {
+	count, err := w.Count()
+	if err != nil {
+		return nil, err
+	}
+
+	lastSheet, err := w.Item(int(count))
+	if err != nil {
+		return nil, err
+	}
+
+	v, err := oleutil.CallMethod(w.ComObject(), "Add", nil, lastSheet.ComObject())
+	if err != nil {
+		return nil, err
+	}
+
+	worksheet := NewWorksheetFromWorksheets(w, v.ToIDispatch())
+
+	return worksheet, nil
+}
+
 func (w *Worksheets) Walk(walkFn func(ws *Worksheet, index int) error) (*Worksheet, error) {
 	c, err := w.Count()
 	if err != nil {
