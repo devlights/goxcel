@@ -54,7 +54,7 @@ func (vpb *VPageBreak) Location() (*XlRange, error) {
 }
 
 func (vpb *VPageBreak) SetLocation(ra *XlRange) error {
-	_, err := oleutil.PutProperty(vpb.ComObject(), "Location", ra.comObj)
+	_, err := oleutil.PutProperty(vpb.ComObject(), "Location", ra.ComObject())
 	if err != nil {
 		return err
 	}

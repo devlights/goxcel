@@ -54,7 +54,7 @@ func (hpb *HPageBreak) Location() (*XlRange, error) {
 }
 
 func (hpb *HPageBreak) SetLocation(ra *XlRange) error {
-	_, err := oleutil.PutProperty(hpb.ComObject(), "Location", ra.comObj)
+	_, err := oleutil.PutProperty(hpb.ComObject(), "Location", ra.ComObject())
 	if err != nil {
 		return err
 	}
