@@ -5,10 +5,11 @@ import (
 	"testing"
 )
 
-// TestWorksheet_Misc is test function following cases
+// TestHPageBreaks_Misc is test function following cases
 //
-// - HPageBreaks
-func TestWorksheet_Misc(t *testing.T) {
+// - Count
+// - Item
+func TestHPageBreaks_Misc(t *testing.T) {
 	testutil.Interval()
 	defer testutil.Interval()
 
@@ -27,15 +28,36 @@ func TestWorksheet_Misc(t *testing.T) {
 	c, _ := ws.Cells(10, 1)
 	_ = c.SetValue("helloworld")
 
+	ra, _ := ws.Range(10, 1, 10, 1)
+
 	// Act
 	hpbs, err := ws.HPageBreaks()
 	if err != nil {
 		t.Error(err)
 	}
 
+	err = hpbs.Add(ra)
+	if err != nil {
+		t.Error(err)
+	}
+
 	// Assert
-	if hpbs == nil {
-		t.Errorf("want: not nil\tgot: nil")
+	count, err := hpbs.Count()
+	if err != nil {
+		t.Error(err)
+	}
+
+	if count != 1 {
+		t.Errorf("want: 1\tgot: %v", count)
+	}
+
+	hpb, err := hpbs.Item(1)
+	if err != nil {
+		t.Error(err)
+	}
+
+	if hpb == nil {
+		t.Errorf("want: not nil\tgot nil")
 	}
 
 	_ = g.SetVisible(true)

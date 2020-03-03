@@ -75,7 +75,7 @@ func (w *Worksheets) Add() (*Worksheet, error) {
 	return worksheet, nil
 }
 
-func (w *Worksheets) Walk(walkFn func(ws *Worksheet) error) (*Worksheet, error) {
+func (w *Worksheets) Walk(walkFn func(ws *Worksheet, index int) error) (*Worksheet, error) {
 	c, err := w.Count()
 	if err != nil {
 		return nil, err
@@ -88,7 +88,7 @@ func (w *Worksheets) Walk(walkFn func(ws *Worksheet) error) (*Worksheet, error) 
 			return nil, err
 		}
 
-		err = walkFn(ws)
+		err = walkFn(ws, i)
 		if err != nil {
 			return ws, err
 		}

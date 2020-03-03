@@ -41,6 +41,14 @@ func NewRangeFromRange(ra *XlRange, c *ole.IDispatch) *XlRange {
 	return newRange(ra, c)
 }
 
+func NewRangeFromHPageBreak(hpb *HPageBreak, c *ole.IDispatch) *XlRange {
+	return newRange(hpb, c)
+}
+
+func NewRangeFromVPageBreak(vpb *VPageBreak, c *ole.IDispatch) *XlRange {
+	return newRange(vpb, c)
+}
+
 func (r *XlRange) ComObject() *ole.IDispatch {
 	return r.comObj
 }
@@ -116,6 +124,34 @@ func (r *XlRange) Interior() (*Interior, error) {
 	return interior, nil
 }
 
+func (r *XlRange) Column() (int32, error) {
+	v, err := oleutil.GetProperty(r.ComObject(), "Column")
+	if err != nil {
+		return 0, err
+	}
+
+	column, ok := v.Value().(int32)
+	if !ok {
+		return 0, ValueCantConvertToInt
+	}
+
+	return column, nil
+}
+
+func (r *XlRange) Row() (int32, error) {
+	v, err := oleutil.GetProperty(r.ComObject(), "Row")
+	if err != nil {
+		return 0, err
+	}
+
+	row, ok := v.Value().(int32)
+	if !ok {
+		return 0, ValueCantConvertToInt
+	}
+
+	return row, nil
+}
+
 func (r *XlRange) Columns() (*XlRange, error) {
 	v, err := oleutil.GetProperty(r.ComObject(), "Columns")
 	if err != nil {
@@ -134,6 +170,24 @@ func (r *XlRange) Rows() (*XlRange, error) {
 
 	xlrange := NewRangeFromRange(r, v.ToIDispatch())
 	return xlrange, nil
+}
+
+func (r *XlRange) Value() (interface{}, error) {
+	v, err := oleutil.GetProperty(r.ComObject(), "Value")
+	if err != nil {
+		return nil, err
+	}
+
+	return v.Value(), nil
+}
+
+func (r *XlRange) SetValue(value interface{}) error {
+	_, err := oleutil.PutProperty(r.ComObject(), "Value", value)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (r *XlRange) Walk(walkFn func(r *XlRange, c *Cell, row, col int) error) (*Cell, error) {
