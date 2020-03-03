@@ -124,3 +124,25 @@ func (ws *Worksheet) PageSetup() (*PageSetup, error) {
 
 	return pagesetup, nil
 }
+
+func (ws *Worksheet) HPageBreaks() (*HPageBreaks, error) {
+	v, err := oleutil.GetProperty(ws.ComObject(), "HPageBreaks")
+	if err != nil {
+		return nil, err
+	}
+
+	hpbs := NewHPageBreaks(ws, v.ToIDispatch())
+
+	return hpbs, nil
+}
+
+func (ws *Worksheet) VPageBreaks() (*VPageBreaks, error) {
+	v, err := oleutil.GetProperty(ws.ComObject(), "VPageBreaks")
+	if err != nil {
+		return nil, err
+	}
+
+	vpbs := NewVPageBreaks(ws, v.ToIDispatch())
+
+	return vpbs, nil
+}
