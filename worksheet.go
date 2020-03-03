@@ -146,3 +146,14 @@ func (ws *Worksheet) VPageBreaks() (*VPageBreaks, error) {
 
 	return vpbs, nil
 }
+
+func (ws *Worksheet) Shapes() (*Shapes, error) {
+	v, err := oleutil.GetProperty(ws.ComObject(), "Shapes")
+	if err != nil {
+		return nil, err
+	}
+
+	shapes := NewShapesFromWorksheet(ws, v.ToIDispatch())
+
+	return shapes, nil
+}

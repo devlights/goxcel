@@ -49,6 +49,10 @@ func NewRangeFromVPageBreak(vpb *VPageBreak, c *ole.IDispatch) *XlRange {
 	return newRange(vpb, c)
 }
 
+func NewRangeFromShape(s *Shape, c *ole.IDispatch) *XlRange {
+	return newRange(s, c)
+}
+
 func (r *XlRange) ComObject() *ole.IDispatch {
 	return r.comObj
 }
