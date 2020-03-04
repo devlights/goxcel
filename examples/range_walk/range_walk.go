@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/devlights/goxcel"
 	"log"
+	"os"
 	"time"
 )
 
@@ -12,6 +13,10 @@ func init() {
 }
 
 func main() {
+	os.Exit(run())
+}
+
+func run() int {
 	g, r, _ := goxcel.NewGoxcel()
 	defer r()
 
@@ -36,7 +41,8 @@ func main() {
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return 1
 	}
 
 	time.Sleep(10 * time.Second)
@@ -52,6 +58,9 @@ func main() {
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return 2
 	}
+
+	return 0
 }

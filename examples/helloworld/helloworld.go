@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/devlights/goxcel"
 	"log"
+	"os"
 	"time"
 )
 
@@ -14,11 +15,15 @@ func init() {
 //
 // noinspection GoNilness
 func main() {
+	os.Exit(run())
+}
+
+func run() int {
 	// 1. Create new Goxcel instance.
 	g, goxcelReleaseFn, err := goxcel.NewGoxcel()
 	if err != nil {
 		log.Println(err)
-		return
+		return 1
 	}
 
 	// must call goxcel's release function when function exited
@@ -33,14 +38,14 @@ func main() {
 	wbs, err := g.Workbooks()
 	if err != nil {
 		log.Println(err)
-		return
+		return 2
 	}
 
 	// 3. Add Workbook
 	wb, wbReleaseFn, err := wbs.Add()
 	if err != nil {
 		log.Println(err)
-		return
+		return 3
 	}
 
 	// call workbook's release funciton
@@ -50,21 +55,21 @@ func main() {
 	ws, err := wb.Sheets(1)
 	if err != nil {
 		log.Println(err)
-		return
+		return 4
 	}
 
 	// 5. Get Cell
 	c, err := ws.Cells(1, 1)
 	if err != nil {
 		log.Println(err)
-		return
+		return 5
 	}
 
 	// 6. Set the value to cell
 	err = c.SetValue("こんにちはWorld")
 	if err != nil {
 		log.Println(err)
-		return
+		return 6
 	}
 
 	// optional. Display Excel and see the result.
@@ -75,13 +80,15 @@ func main() {
 	err = wb.SetSaved(true)
 	if err != nil {
 		log.Println(err)
-		return
+		return 7
 	}
 
 	// 8. Close Workbook
 	err = wb.Close()
 	if err != nil {
 		log.Println(err)
-		return
+		return 8
 	}
+
+	return 0
 }

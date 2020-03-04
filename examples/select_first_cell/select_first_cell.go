@@ -15,20 +15,25 @@ var (
 )
 
 func main() {
+	os.Exit(run())
+}
+
+func run() int {
 	flag.StringVar(&targetDirectory, "d", "", "対象ディレクトリ (必須)")
 	flag.Parse()
 
 	if targetDirectory == "" {
 		flag.Usage()
-		os.Exit(2)
+		return 2
 	}
 
 	err := filepath.Walk(targetDirectory, walkFiles)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return 1
 	}
 
-	os.Exit(0)
+	return 0
 }
 
 func walkFiles(path string, info os.FileInfo, err error) error {

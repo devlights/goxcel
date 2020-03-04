@@ -4,6 +4,7 @@ import (
 	"github.com/devlights/goxcel"
 	"github.com/devlights/goxcel/constants"
 	"log"
+	"os"
 	"time"
 )
 
@@ -15,6 +16,10 @@ func init() {
 //
 // noinspection GoNilness
 func main() {
+	os.Exit(run())
+}
+
+func run() int {
 	g, r, _ := goxcel.NewGoxcel()
 	defer r()
 
@@ -27,9 +32,18 @@ func main() {
 
 	ws, _ := wb.Sheets(1)
 	cell, _ := ws.Cells(1, 1)
-	_ = cell.SetValue("こんにちはWorld")
+	err := cell.SetValue("こんにちはWorld")
+	if err != nil {
+		log.Println(err)
+		return 1
+	}
 
-	font, _ := cell.Font()
+	font, err := cell.Font()
+	if err != nil {
+		log.Println(err)
+		return 2
+	}
+
 	_ = font.SetColor(constants.RgbRed)
 	_ = font.SetBold(true)
 	_ = font.SetItalic(true)
@@ -37,10 +51,17 @@ func main() {
 	_ = font.SetSize(40)
 	_ = font.SetName("ＭＳ ゴシック")
 
-	interior, _ := cell.Interior()
+	interior, err := cell.Interior()
+	if err != nil {
+		log.Println(err)
+		return 3
+	}
+
 	_ = interior.SetColor(constants.RgbBlue)
 
 	// optional. Display Excel and see the result.
 	_ = g.SetVisible(true)
 	time.Sleep(15 * time.Second)
+
+	return 0
 }

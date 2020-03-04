@@ -17,6 +17,10 @@ var (
 )
 
 func main() {
+	os.Exit(run())
+}
+
+func run() int {
 	flag.StringVar(&targetDirectory, "d", "", "対象ディレクトリ (必須)")
 	flag.StringVar(&sheetPattern, "p", "", "シート名の条件、指定しない場合は全シートが対象")
 	flag.StringVar(&footer, "f", "&P", "フッターに設定する値")
@@ -24,15 +28,16 @@ func main() {
 
 	if targetDirectory == "" {
 		flag.Usage()
-		os.Exit(2)
+		return 2
 	}
 
 	err := filepath.Walk(targetDirectory, walkFiles)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return 1
 	}
 
-	os.Exit(0)
+	return 0
 }
 
 func walkFiles(path string, info os.FileInfo, err error) error {

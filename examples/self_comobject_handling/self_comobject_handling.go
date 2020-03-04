@@ -7,16 +7,21 @@ import (
 	"github.com/go-ole/go-ole"
 	"github.com/go-ole/go-ole/oleutil"
 	"log"
+	"os"
 )
 
 func main() {
+	os.Exit(run())
+}
+
+func run() int {
 	g, r, _ := goxcel.NewGoxcel()
 	defer r()
 
 	wbs, _ := g.Workbooks()
 
-	wb, wbR, _ := wbs.Add()
-	defer wbR()
+	wb, wbr, _ := wbs.Add()
+	defer wbr()
 
 	ws, _ := wb.Sheets(1)
 
@@ -30,8 +35,11 @@ func main() {
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return 1
 	}
 
 	fmt.Println(value) // --> Sheet1
+
+	return 0
 }
