@@ -23,6 +23,10 @@ var (
 )
 
 func main() {
+	os.Exit(run())
+}
+
+func run() int {
 	flag.StringVar(&targetDirectory, "d", "", "対象ディレクトリ (必須)")
 	flag.StringVar(&sheetPattern, "p", "", "シート名の条件、指定しない場合は全シートが対象")
 	flag.StringVar(&orientation, "o", OrientationPortrait, "印刷方向 (portrait(縦) or landscape(横)) (必須)")
@@ -30,20 +34,21 @@ func main() {
 
 	if targetDirectory == "" || orientation == "" {
 		flag.Usage()
-		os.Exit(2)
+		return 2
 	}
 
 	if orientation != OrientationPortrait && orientation != OrientationLandscape {
 		flag.Usage()
-		os.Exit(3)
+		return 3
 	}
 
 	err := filepath.Walk(targetDirectory, walkFiles)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return 1
 	}
 
-	os.Exit(0)
+	return 0
 }
 
 func walkFiles(path string, info os.FileInfo, err error) error {

@@ -16,7 +16,6 @@ func main() {
 }
 
 func run() int {
-
 	g, r, _ := goxcel.NewGoxcel()
 	defer r()
 
