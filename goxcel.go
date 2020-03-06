@@ -41,7 +41,7 @@ func NewGoxcel() (*Goxcel, ReleaseFunc, error) {
 }
 
 func (g *Goxcel) init() error {
-	err := ole.CoInitialize(0)
+	err := ole.CoInitializeEx(0, ole.COINIT_MULTITHREADED)
 	if err != nil {
 		return err
 	}
