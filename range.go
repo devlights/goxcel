@@ -3,6 +3,7 @@ package goxcel
 import (
 	"errors"
 	"fmt"
+	"github.com/devlights/goxcel/constants"
 	"github.com/go-ole/go-ole"
 	"github.com/go-ole/go-ole/oleutil"
 )
@@ -187,6 +188,15 @@ func (r *XlRange) Value() (interface{}, error) {
 
 func (r *XlRange) SetValue(value interface{}) error {
 	_, err := oleutil.PutProperty(r.ComObject(), "Value", value)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *XlRange) SetNumberFormatLocal(format constants.NumberFormatLocal) error {
+	_, err := oleutil.PutProperty(r.ComObject(), "NumberFormatLocal", string(format))
 	if err != nil {
 		return err
 	}

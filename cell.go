@@ -1,6 +1,7 @@
 package goxcel
 
 import (
+	"github.com/devlights/goxcel/constants"
 	"github.com/go-ole/go-ole"
 	"github.com/go-ole/go-ole/oleutil"
 )
@@ -103,4 +104,13 @@ func (c *Cell) Interior() (*Interior, error) {
 	interior := NewInterior(c, v.ToIDispatch())
 
 	return interior, nil
+}
+
+func (c *Cell) SetNumberFormatLocal(format constants.NumberFormatLocal) error {
+	_, err := oleutil.PutProperty(c.ComObject(), "NumberFormatLocal", string(format))
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
