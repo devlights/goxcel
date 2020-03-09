@@ -1,9 +1,11 @@
 package goxcel
 
 import (
+	"log"
+	"runtime"
+
 	"github.com/go-ole/go-ole"
 	"github.com/go-ole/go-ole/oleutil"
-	"log"
 )
 
 var (
@@ -17,6 +19,17 @@ type (
 
 	ReleaseFunc func()
 )
+
+func InitGoxcel() (func(), error) {
+	// COM は、スレッドアフィニティがある
+	// Goxcelは、内部的に STA として動作させるので
+	// 最初に現在呼び出しが行われている goroutine をスレッドロックする
+	runtime.LockOSThread()
+
+	return func() {
+		runtime.UnlockOSThread()
+	}, nil
+}
 
 func NewGoxcel() (*Goxcel, ReleaseFunc, error) {
 	g := new(Goxcel)
@@ -41,7 +54,8 @@ func NewGoxcel() (*Goxcel, ReleaseFunc, error) {
 }
 
 func (g *Goxcel) init() error {
-	err := ole.CoInitializeEx(0, ole.COINIT_MULTITHREADED)
+	// STA Mode
+	err := ole.CoInitializeEx(0, ole.COINIT_APARTMENTTHREADED)
 	if err != nil {
 		return err
 	}
