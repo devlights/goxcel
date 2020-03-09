@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/devlights/goxcel"
 	"log"
 	"os"
 	"time"
+
+	"github.com/devlights/goxcel"
 )
 
 func init() {
@@ -19,11 +20,24 @@ func main() {
 }
 
 func run() int {
+	// Goxel works on STA mode.
+	// runtime.LockOSThread() is called inside goxcel.InitGoxcel().
+	// 0. Initialize Goxcel
+	//    Lock current goroutine thread for STA behavior.
+	quitGoxcelFn, err := goxcel.InitGoxcel()
+	if err != nil {
+		log.Println(err)
+		return 1
+	}
+
+	// Unlock thread lock
+	defer quitGoxcelFn()
+
 	// 1. Create new Goxcel instance.
 	g, goxcelReleaseFn, err := goxcel.NewGoxcel()
 	if err != nil {
 		log.Println(err)
-		return 1
+		return 2
 	}
 
 	// must call goxcel's release function when function exited
@@ -38,14 +52,14 @@ func run() int {
 	wbs, err := g.Workbooks()
 	if err != nil {
 		log.Println(err)
-		return 2
+		return 3
 	}
 
 	// 3. Add Workbook
 	wb, wbReleaseFn, err := wbs.Add()
 	if err != nil {
 		log.Println(err)
-		return 3
+		return 4
 	}
 
 	// call workbook's release funciton
@@ -55,21 +69,21 @@ func run() int {
 	ws, err := wb.Sheets(1)
 	if err != nil {
 		log.Println(err)
-		return 4
+		return 5
 	}
 
 	// 5. Get Cell
 	c, err := ws.Cells(1, 1)
 	if err != nil {
 		log.Println(err)
-		return 5
+		return 6
 	}
 
 	// 6. Set the value to cell
 	err = c.SetValue("こんにちはWorld")
 	if err != nil {
 		log.Println(err)
-		return 6
+		return 7
 	}
 
 	// optional. Display Excel and see the result.
@@ -80,14 +94,14 @@ func run() int {
 	err = wb.SetSaved(true)
 	if err != nil {
 		log.Println(err)
-		return 7
+		return 8
 	}
 
 	// 8. Close Workbook
 	err = wb.Close()
 	if err != nil {
 		log.Println(err)
-		return 8
+		return 9
 	}
 
 	return 0

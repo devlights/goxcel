@@ -31,6 +31,9 @@ func run() int {
 		return 2
 	}
 
+	quitGoxcelFn, _ := goxcel.InitGoxcel()
+	defer quitGoxcelFn()
+
 	g, r, _ := goxcel.NewGoxcel()
 	defer r()
 

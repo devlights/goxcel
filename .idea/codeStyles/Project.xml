@@ -1,0 +1,9 @@
+<component name="ProjectCodeStyleConfiguration">
+  <code_scheme name="Project" version="173">
+    <GoCodeStyleSettings>
+      <option name="ADD_PARENTHESES_FOR_SINGLE_IMPORT" value="true" />
+      <option name="ADD_LEADING_SPACE_TO_COMMENTS" value="true" />
+      <option name="GROUP_STDLIB_IMPORTS" value="true" />
+    </GoCodeStyleSettings>
+  </code_scheme>
+</component>

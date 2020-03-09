@@ -58,6 +58,9 @@ func walkFiles(path string, info os.FileInfo, err error) error {
 		return err
 	}
 
+	quitGoxcelFn, _ := goxcel.InitGoxcel()
+	defer quitGoxcelFn()
+
 	g, r, err := goxcel.NewGoxcel()
 	if err != nil {
 		return err
