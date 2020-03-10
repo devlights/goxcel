@@ -20,17 +20,13 @@ func main() {
 }
 
 func run() int {
-	// Goxel works on STA mode.
-	// runtime.LockOSThread() is called inside goxcel.InitGoxcel().
 	// 0. Initialize Goxcel
-	//    Lock current goroutine thread for STA behavior.
 	quitGoxcelFn, err := goxcel.InitGoxcel()
 	if err != nil {
 		log.Println(err)
 		return 1
 	}
 
-	// Unlock thread lock
 	defer quitGoxcelFn()
 
 	// 1. Create new Goxcel instance.
@@ -90,19 +86,8 @@ func run() int {
 	_ = g.SetVisible(true)
 	time.Sleep(15 * time.Second)
 
-	// 7. Call the Workbook::SetSaved method to not show a dialog on exit
-	err = wb.SetSaved(true)
-	if err != nil {
-		log.Println(err)
-		return 8
-	}
-
-	// 8. Close Workbook
-	err = wb.Close()
-	if err != nil {
-		log.Println(err)
-		return 9
-	}
+	// Workbook::SetSaved(true) and Workbook::Close() is automatically called when `defer wbReleaseFn()`.
+	// Excel::Quit() and Excel::Release() is automatically called when `defer goxcelReleaseFn()`.
 
 	return 0
 }

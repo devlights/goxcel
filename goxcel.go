@@ -10,7 +10,6 @@ import (
 
 var (
 	_releaser = NewReleaser()
-	staMode   = false
 )
 
 type (
@@ -21,21 +20,12 @@ type (
 	ReleaseFunc func()
 )
 
-func InitGoxcel(runOnSTA bool) (func(), error) {
-	if runOnSTA {
-		// COM は、スレッドアフィニティがある
-		// STAとして動作させる場合、スレッドを固定する必要がある
-		// 最初に現在呼び出しが行われている goroutine をスレッドロックする
-		staMode = true
-		runtime.LockOSThread()
+func InitGoxcel() (func(), error) {
+	runtime.LockOSThread()
 
-		return func() {
-			runtime.UnlockOSThread()
-		}, nil
-	}
-
-	staMode = false
-	return func() {}, nil
+	return func() {
+		runtime.UnlockOSThread()
+	}, nil
 }
 
 func NewGoxcel() (*Goxcel, ReleaseFunc, error) {
@@ -61,16 +51,10 @@ func NewGoxcel() (*Goxcel, ReleaseFunc, error) {
 }
 
 func (g *Goxcel) init() error {
-	if staMode {
-		err := ole.CoInitializeEx(0, ole.COINIT_APARTMENTTHREADED)
-		if err != nil {
-			return err
-		}
-	} else {
-		err := ole.CoInitializeEx(0, ole.COINIT_MULTITHREADED)
-		if err != nil {
-			return err
-		}
+	// err := ole.CoInitializeEx(0, ole.COINIT_APARTMENTTHREADED)
+	err := ole.CoInitializeEx(0, ole.COINIT_MULTITHREADED)
+	if err != nil {
+		return err
 	}
 
 	unknown, err := oleutil.CreateObject("Excel.Application")
