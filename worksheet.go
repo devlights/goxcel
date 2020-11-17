@@ -2,6 +2,7 @@ package goxcel
 
 import (
 	"fmt"
+
 	"github.com/go-ole/go-ole"
 	"github.com/go-ole/go-ole/oleutil"
 )
@@ -156,4 +157,15 @@ func (ws *Worksheet) Shapes() (*Shapes, error) {
 	shapes := NewShapesFromWorksheet(ws, v.ToIDispatch())
 
 	return shapes, nil
+}
+
+func (ws *Worksheet) CopySheet(dest *Worksheet, after bool) error {
+	var e error
+	if after {
+		_, e = oleutil.CallMethod(ws.ComObject(), "Copy", nil, dest.ComObject())
+	} else {
+		_, e = oleutil.CallMethod(ws.ComObject(), "Copy", dest.ComObject())
+	}
+
+	return e
 }
