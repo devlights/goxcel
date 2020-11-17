@@ -6,6 +6,54 @@ import (
 	"github.com/devlights/goxcel/testutil"
 )
 
+func TestWorksheet_Name(t *testing.T) {
+	cases := []struct {
+		name string
+		in   string
+		out  string
+	}{
+		{"ascii-sheet-name", "helloworld", "helloworld"},
+		{"non-ascii-sheet-name", "テストシート", "テストシート"},
+	}
+
+	for _, c := range cases {
+		t.Run(c.name, func(t *testing.T) {
+			testutil.Interval()
+			defer testutil.Interval()
+
+			g, r, _ := NewGoxcel()
+			defer r()
+
+			_ = g.SetDisplayAlerts(false)
+			_ = g.SetVisible(false)
+
+			wbs, _ := g.Workbooks()
+			wb, wbr, _ := wbs.Add()
+			defer wbr()
+
+			ws, _ := wb.Sheets(1)
+
+			if err := ws.SetName(c.in); err != nil {
+				t.Errorf("ws.SetName(%v) got %v", c.in, err)
+			}
+
+			name, err := ws.Name()
+			if err != nil {
+				t.Errorf("ws.Name() got %v", err)
+			}
+
+			if name != c.out {
+				t.Errorf("worksheet name [%v] != [%v]", name, c.out)
+			}
+
+			_ = g.SetVisible(true)
+			for i := 0; i < 2; i++ {
+				testutil.Interval()
+			}
+		})
+	}
+}
+
 func TestWorksheet_CopySheet(t *testing.T) {
 	testutil.Interval()
 	defer testutil.Interval()
@@ -41,10 +89,7 @@ func TestWorksheet_CopySheet(t *testing.T) {
 	}
 }
 
-// TestWorksheet_Misc is test function following cases
-//
-// - HPageBreaks
-func TestWorksheet_Misc(t *testing.T) {
+func TestWorksheet_HPageBreaks(t *testing.T) {
 	testutil.Interval()
 	defer testutil.Interval()
 

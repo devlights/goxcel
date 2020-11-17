@@ -58,6 +58,11 @@ func (ws *Worksheet) Name() (string, error) {
 	return name, nil
 }
 
+func (ws *Worksheet) SetName(name string) error {
+	_, err := oleutil.PutProperty(ws.ComObject(), "Name", name)
+	return err
+}
+
 func (ws *Worksheet) Activate() error {
 	_, err := oleutil.CallMethod(ws.ComObject(), "Activate")
 	return err
