@@ -2,6 +2,8 @@
 
 This directory contains following examples.
 
+- copy_sheet
+  - Example of Worksheet.CopySheet
 - font_and_interior
   - Example of Cell.Font and Cell.Interior
 - helloworld
@@ -28,6 +30,14 @@ This directory contains following examples.
 ## Run
 
 Each examples can run with ```go run```.
+
+- copy_sheet
+
+```sh
+$ go run github.com/devlights/goxcel/examples/copy_sheet -srcdir path/to/src/excel/dir 
+```
+
+After processing, a file named result.xlsx is generated in the current directory and contains all the sheets in the Excel file under the directory specified by the parameter.
 
 - font_and_interior
 
