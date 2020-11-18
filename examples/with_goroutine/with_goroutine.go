@@ -46,8 +46,7 @@ func run() int {
 		defer goxcelReleaseFn()
 
 		// optional settings
-		_ = g.SetDisplayAlerts(false)
-		_ = g.SetVisible(false)
+		_ = g.Silent(false)
 
 		// 2. Get Workbooks instance.
 		wbs, err := g.Workbooks()

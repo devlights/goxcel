@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/devlights/goxcel"
 	"log"
 	"os"
 	"time"
+
+	"github.com/devlights/goxcel"
 )
 
 func init() {
@@ -23,8 +24,7 @@ func run() int {
 	g, r, _ := goxcel.NewGoxcel()
 	defer r()
 
-	_ = g.SetDisplayAlerts(false)
-	_ = g.SetVisible(true)
+	_ = g.Silent(false)
 
 	wbs, _ := g.Workbooks()
 

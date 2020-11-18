@@ -41,8 +41,7 @@ func run() int {
 	g, r, _ := goxcel.NewGoxcel()
 	defer r()
 
-	_ = g.SetDisplayAlerts(false)
-	_ = g.SetVisible(false)
+	_ = g.Silent(false)
 
 	wbs, _ := g.Workbooks()
 	wbDest, wbDestR, _ := wbs.Add()

@@ -3,12 +3,13 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/devlights/goxcel"
-	"github.com/devlights/goxcel/constants"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/devlights/goxcel"
+	"github.com/devlights/goxcel/constants"
 )
 
 const (
@@ -79,8 +80,7 @@ func walkFiles(path string, info os.FileInfo, err error) error {
 
 	defer r()
 
-	_ = g.SetDisplayAlerts(false)
-	_ = g.SetVisible(true)
+	_ = g.Silent(false)
 
 	wbs, err := g.Workbooks()
 	if err != nil {
