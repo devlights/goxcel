@@ -100,6 +100,11 @@ func (g *Goxcel) Releaser() *Releaser {
 	return _releaser
 }
 
+func (g *Goxcel) SetScreenUpdating(value bool) error {
+	_, err := oleutil.PutProperty(g.ComObject(), "ScreenUpdating", value)
+	return err
+}
+
 func (g *Goxcel) SetDisplayAlerts(value bool) error {
 	_, err := oleutil.PutProperty(g.ComObject(), "DisplayAlerts", value)
 	return err
