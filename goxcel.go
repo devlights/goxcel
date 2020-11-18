@@ -1,6 +1,7 @@
 package goxcel
 
 import (
+	"fmt"
 	"log"
 	"runtime"
 
@@ -100,9 +101,37 @@ func (g *Goxcel) Releaser() *Releaser {
 	return _releaser
 }
 
+func (g *Goxcel) EnableEvents() (bool, error) {
+	r, err := oleutil.GetProperty(g.ComObject(), "EnableEvents")
+	if err != nil {
+		return false, err
+	}
+
+	enabled, ok := r.Value().(bool)
+	if !ok {
+		return false, fmt.Errorf("can't cast to bool (EnableEvents)")
+	}
+
+	return enabled, nil
+}
+
 func (g *Goxcel) SetEnableEvents(value bool) error {
 	_, err := oleutil.PutProperty(g.ComObject(), "EnableEvents", value)
 	return err
+}
+
+func (g *Goxcel) ScreenUpdating() (bool, error) {
+	r, err := oleutil.GetProperty(g.ComObject(), "ScreenUpdating")
+	if err != nil {
+		return false, err
+	}
+
+	enabled, ok := r.Value().(bool)
+	if !ok {
+		return false, fmt.Errorf("can't cast to bool (ScreenUpdating)")
+	}
+
+	return enabled, nil
 }
 
 func (g *Goxcel) SetScreenUpdating(value bool) error {
@@ -110,9 +139,43 @@ func (g *Goxcel) SetScreenUpdating(value bool) error {
 	return err
 }
 
+func (g *Goxcel) DisplayAlerts() (bool, error) {
+	r, err := oleutil.GetProperty(g.ComObject(), "DisplayAlerts")
+	if err != nil {
+		return false, err
+	}
+
+	enabled, ok := r.Value().(bool)
+	if !ok {
+		return false, fmt.Errorf("can't cast to bool (DisplayAlerts)")
+	}
+
+	return enabled, nil
+}
+
 func (g *Goxcel) SetDisplayAlerts(value bool) error {
 	_, err := oleutil.PutProperty(g.ComObject(), "DisplayAlerts", value)
 	return err
+}
+
+func (g *Goxcel) Silent(visible bool) error {
+	if err := g.SetDisplayAlerts(false); err != nil {
+		return err
+	}
+
+	if err := g.SetEnableEvents(false); err != nil {
+		return err
+	}
+
+	if err := g.SetScreenUpdating(false); err != nil {
+		return err
+	}
+
+	if err := g.SetVisible(visible); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (g *Goxcel) SetVisible(value bool) error {
