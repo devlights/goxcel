@@ -1,8 +1,9 @@
 package goxcel
 
 import (
-	"github.com/devlights/goxcel/testutil"
 	"testing"
+
+	"github.com/devlights/goxcel/testutil"
 )
 
 func TestGoxcel_Startup(t *testing.T) {
@@ -41,6 +42,7 @@ func TestGoxcel_Workbooks(t *testing.T) {
 	defer r()
 
 	_ = g.SetDisplayAlerts(false)
+	_ = g.SetScreenUpdating(false)
 	_ = g.SetVisible(true)
 
 	wb, err := g.Workbooks()
