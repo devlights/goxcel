@@ -10,6 +10,8 @@ This directory contains following examples.
   - Example of Helloworld
 - pagebreaks
   - Example of Worksheet.HPageBreaks
+- paste_picture
+  - Example of Shapes.AddPicture
 - printer_orientation_adjust
   - Example of Worksheet.PageSetup
 - range_walk
