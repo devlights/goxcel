@@ -82,3 +82,12 @@ func (ss *Shapes) Walk(walkFn func(s *Shape, index int) error) (*Shape, error) {
 
 	return nil, nil
 }
+
+func (ss *Shapes) AddPicture(filename string, left, top, width, height int) error {
+	_, err := oleutil.CallMethod(ss.ComObject(), "AddPicture", filename, false, true, left, top, width, height)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
