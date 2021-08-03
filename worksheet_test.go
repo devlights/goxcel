@@ -1,8 +1,11 @@
 package goxcel
 
 import (
+	"os"
+	"path/filepath"
 	"testing"
 
+	"github.com/devlights/goxcel/constants"
 	"github.com/devlights/goxcel/testutil"
 )
 
@@ -117,6 +120,45 @@ func TestWorksheet_HPageBreaks(t *testing.T) {
 	// Assert
 	if hpbs == nil {
 		t.Errorf("want: not nil\tgot: nil")
+	}
+
+	_ = g.SetVisible(true)
+	testutil.Interval()
+	testutil.Interval()
+}
+
+func TestWorksheet_ExportAsFixedFormat(t *testing.T) {
+	testutil.Interval()
+	defer testutil.Interval()
+
+	// Arrange
+	g, r, _ := NewGoxcel()
+	defer r()
+
+	_ = g.SetDisplayAlerts(false)
+	_ = g.SetVisible(false)
+
+	wbs, _ := g.Workbooks()
+	wb, wbReleaseFn, _ := wbs.Add()
+	defer wbReleaseFn()
+
+	ws, _ := wb.Sheets(1)
+	c, _ := ws.Cells(10, 1)
+	_ = c.SetValue("helloworld")
+
+	// Act
+	p := filepath.Join(os.TempDir(), "goxcel-ExportAsFixedFormat-test.pdf")
+	t.Log(p)
+
+	err := ws.ExportAsFixedFormat(constants.XlTypePDF, p)
+	if err != nil {
+		t.Error(err)
+	}
+
+	// Assert
+	_, err = os.Stat(p)
+	if err != nil {
+		t.Errorf("[want] file exists\t[got] file not exists\t%s", p)
 	}
 
 	_ = g.SetVisible(true)

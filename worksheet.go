@@ -3,6 +3,7 @@ package goxcel
 import (
 	"fmt"
 
+	"github.com/devlights/goxcel/constants"
 	"github.com/go-ole/go-ole"
 	"github.com/go-ole/go-ole/oleutil"
 )
@@ -173,4 +174,9 @@ func (ws *Worksheet) CopySheet(dest *Worksheet, after bool) error {
 	}
 
 	return e
+}
+
+func (ws *Worksheet) ExportAsFixedFormat(fmtType constants.XlFixedFormatType, path string) error {
+	_, err := oleutil.CallMethod(ws.ComObject(), "ExportAsFixedFormat", int(fmtType), path)
+	return err
 }
