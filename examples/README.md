@@ -4,6 +4,8 @@ This directory contains following examples.
 
 - copy_sheet
   - Example of Worksheet.CopySheet
+- export_pdf
+  - Example of Worksheet.ExportAsFixedFormat
 - font_and_interior
   - Example of Cell.Font and Cell.Interior
 - helloworld
@@ -40,6 +42,12 @@ $ go run github.com/devlights/goxcel/examples/copy_sheet -srcdir path/to/src/exc
 ```
 
 After processing, a file named result.xlsx is generated in the current directory and contains all the sheets in the Excel file under the directory specified by the parameter.
+
+- export_pdf
+
+```sh
+$ go run github.com/devlights/goxcel/examples/export_pdf -src /path/to/src/excel/file -dst /path/to/dest/pdf/file
+```
 
 - font_and_interior
 
