@@ -29,6 +29,15 @@ func InitGoxcel() (func(), error) {
 	}, nil
 }
 
+func MustInitGoxcel() func() {
+	fn, err := InitGoxcel()
+	if err != nil {
+		panic(err)
+	}
+
+	return fn
+}
+
 func NewGoxcel() (*Goxcel, ReleaseFunc, error) {
 	g := new(Goxcel)
 
@@ -49,6 +58,15 @@ func NewGoxcel() (*Goxcel, ReleaseFunc, error) {
 	}
 
 	return g, startReleaserFunc, err
+}
+
+func MustNewGoxcel() (*Goxcel, ReleaseFunc) {
+	g, fn, err := NewGoxcel()
+	if err != nil {
+		panic(err)
+	}
+
+	return g, fn
 }
 
 func (g *Goxcel) init() error {
@@ -178,9 +196,22 @@ func (g *Goxcel) Silent(visible bool) error {
 	return nil
 }
 
+func (g *Goxcel) MustSilent(visible bool) {
+	err := g.Silent(visible)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func (g *Goxcel) SetVisible(value bool) error {
 	_, err := oleutil.PutProperty(g.ComObject(), "Visible", value)
 	return err
+}
+
+func (g *Goxcel) MustSetVisible(value bool) {
+	if err := g.SetVisible(value); err != nil {
+		panic(err)
+	}
 }
 
 func (g *Goxcel) Workbooks() (*Workbooks, error) {
@@ -192,6 +223,15 @@ func (g *Goxcel) Workbooks() (*Workbooks, error) {
 	workbooks := NewWorkbooks(g, wb.ToIDispatch())
 
 	return workbooks, nil
+}
+
+func (g *Goxcel) MustWorkbooks() *Workbooks {
+	wb, err := g.Workbooks()
+	if err != nil {
+		panic(err)
+	}
+
+	return wb
 }
 
 func (g *Goxcel) ActiveWindow() (*Window, error) {

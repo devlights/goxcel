@@ -1,11 +1,34 @@
 package goxcel
 
 import (
-	"github.com/devlights/goxcel/testutil"
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/devlights/goxcel/testutil"
 )
+
+func TestWorkbooks_MustMethods(t *testing.T) {
+	f := MustInitGoxcel()
+	defer f()
+
+	g, r := MustNewGoxcel()
+	defer r()
+
+	g.MustSilent(true)
+
+	wbs := g.MustWorkbooks()
+	wb, wbr := wbs.MustAdd()
+	defer wbr()
+
+	if err := wb.SetSaved(true); err != nil {
+		t.Error(err)
+	}
+
+	if err := wb.Close(); err != nil {
+		t.Error(err)
+	}
+}
 
 func TestWorkbooks_Add(t *testing.T) {
 	testutil.Interval()

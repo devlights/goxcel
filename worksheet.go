@@ -121,6 +121,15 @@ func (ws *Worksheet) Cells(row int, col int) (*Cell, error) {
 	return cell, nil
 }
 
+func (ws *Worksheet) MustCells(row int, col int) *Cell {
+	c, err := ws.Cells(row, col)
+	if err != nil {
+		panic(err)
+	}
+
+	return c
+}
+
 func (ws *Worksheet) PageSetup() (*PageSetup, error) {
 	p, err := oleutil.GetProperty(ws.ComObject(), "PageSetup")
 	if err != nil {

@@ -1,12 +1,46 @@
 package goxcel
 
 import (
-	"github.com/devlights/goxcel/constants"
-	"github.com/devlights/goxcel/testutil"
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/devlights/goxcel/constants"
+	"github.com/devlights/goxcel/testutil"
 )
+
+func TestCell_MustMethods(t *testing.T) {
+	f := MustInitGoxcel()
+	defer f()
+
+	g, r := MustNewGoxcel()
+	defer r()
+
+	g.MustSilent(true)
+
+	wbs := g.MustWorkbooks()
+	wb, wbr := wbs.MustAdd()
+	defer wbr()
+
+	ws := wb.MustSheets(1)
+	if ws == nil {
+		t.Error("ws is nil")
+	}
+
+	cell := ws.MustCells(1, 1)
+	if cell == nil {
+		t.Error("cell is nil")
+	}
+
+	if err := cell.SetValue("helloworld"); err != nil {
+		t.Error(err)
+	}
+
+	v := cell.MustValue()
+	if v != "helloworld" {
+		t.Errorf("want: helloworld\tgot: %v", v)
+	}
+}
 
 func TestCell_Value(t *testing.T) {
 	testutil.Interval()
