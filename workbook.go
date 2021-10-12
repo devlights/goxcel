@@ -72,6 +72,15 @@ func (w *Workbook) Sheets(index int) (*Worksheet, error) {
 	return ws, nil
 }
 
+func (w *Workbook) MustSheets(index int) *Worksheet {
+	ws, err := w.Sheets(index)
+	if err != nil {
+		panic(err)
+	}
+
+	return ws
+}
+
 func (w *Workbook) Save() error {
 	_, err := oleutil.CallMethod(w.ComObject(), "Save")
 	return err

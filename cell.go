@@ -56,6 +56,15 @@ func (c *Cell) Value() (interface{}, error) {
 	return v.Value(), nil
 }
 
+func (c *Cell) MustValue() interface{} {
+	v, err := c.Value()
+	if err != nil {
+		panic(err)
+	}
+
+	return v
+}
+
 func (c *Cell) SetValue(value interface{}) error {
 	_, err := oleutil.PutProperty(c.ComObject(), "Value", value)
 	if err != nil {

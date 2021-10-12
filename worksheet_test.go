@@ -9,6 +9,38 @@ import (
 	"github.com/devlights/goxcel/testutil"
 )
 
+func TestWorksheet_MustMethods(t *testing.T) {
+	f := MustInitGoxcel()
+	defer f()
+
+	g, r := MustNewGoxcel()
+	defer r()
+
+	g.MustSilent(true)
+
+	wbs := g.MustWorkbooks()
+	wb, wbr := wbs.MustAdd()
+	defer wbr()
+
+	ws := wb.MustSheets(1)
+	if ws == nil {
+		t.Error("ws is nil")
+	}
+
+	cell := ws.MustCells(1, 1)
+	if cell == nil {
+		t.Error("cell is nil")
+	}
+
+	if err := wb.SetSaved(true); err != nil {
+		t.Error(err)
+	}
+
+	if err := wb.Close(); err != nil {
+		t.Error(err)
+	}
+}
+
 func TestWorksheet_Name(t *testing.T) {
 	cases := []struct {
 		name string

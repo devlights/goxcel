@@ -49,6 +49,15 @@ func (w *Workbooks) Add() (*Workbook, ReleaseFunc, error) {
 	return workbook, releaseFn, nil
 }
 
+func (w *Workbooks) MustAdd() (*Workbook, ReleaseFunc) {
+	wb, fn, err := w.Add()
+	if err != nil {
+		panic(err)
+	}
+
+	return wb, fn
+}
+
 func (w *Workbooks) Open(filePath string) (*Workbook, ReleaseFunc, error) {
 	wb, err := oleutil.CallMethod(w.ComObject(), "Open", filePath)
 	if err != nil {
@@ -58,4 +67,13 @@ func (w *Workbooks) Open(filePath string) (*Workbook, ReleaseFunc, error) {
 	workbook, releaseFn := NewWorkbook(w, wb.ToIDispatch())
 
 	return workbook, releaseFn, nil
+}
+
+func (w *Workbooks) MustOpen(filePath string) (*Workbook, ReleaseFunc) {
+	wb, fn, err := w.Open(filePath)
+	if err != nil {
+		panic(err)
+	}
+
+	return wb, fn
 }

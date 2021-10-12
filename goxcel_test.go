@@ -4,6 +4,20 @@ import (
 	"testing"
 )
 
+func TestGoxcel_MustMethods(t *testing.T) {
+	f := MustInitGoxcel()
+	defer f()
+
+	g, r := MustNewGoxcel()
+	defer r()
+
+	g.MustSilent(true)
+
+	wb := g.MustWorkbooks()
+
+	t.Logf("goxcel: %v\tworkbooks: %v", g.ComObject(), wb.ComObject())
+}
+
 func TestGoxcel_Startup(t *testing.T) {
 	f, err := InitGoxcel()
 	if err != nil {
