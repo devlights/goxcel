@@ -5,7 +5,7 @@ Goxcel is a library to operate Excel using [go-ole](https://github.com/go-ole/go
 This library works only on Windows.
 
 [![CodeFactor](https://www.codefactor.io/repository/github/devlights/goxcel/badge)](https://www.codefactor.io/repository/github/devlights/goxcel)
-![Goxcel - Go Version](https://img.shields.io/badge/go-1.16-blue.svg)
+![Goxcel - Go Version](https://img.shields.io/badge/go-1.17-blue.svg)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/devlights/goxcel)](https://pkg.go.dev/github.com/devlights/goxcel)
 
 ## Install
