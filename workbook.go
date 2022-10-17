@@ -2,6 +2,7 @@ package goxcel
 
 import (
 	"fmt"
+
 	"github.com/devlights/goxcel/constants"
 	"github.com/go-ole/go-ole"
 	"github.com/go-ole/go-ole/oleutil"
@@ -54,6 +55,15 @@ func (w *Workbook) WorkSheets() (*Worksheets, error) {
 	worksheets := NewWorkSheets(w, wss.ToIDispatch())
 
 	return worksheets, nil
+}
+
+func (w *Workbook) MustWorkSheets() *Worksheets {
+	wss, err := w.WorkSheets()
+	if err != nil {
+		panic(err)
+	}
+
+	return wss
 }
 
 func (w *Workbook) Sheets(index int) (*Worksheet, error) {
