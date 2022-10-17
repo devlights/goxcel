@@ -74,6 +74,13 @@ func (c *Cell) SetValue(value interface{}) error {
 	return nil
 }
 
+func (c *Cell) MustSetValue(value interface{}) {
+	err := c.SetValue(value)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func (c *Cell) Select() error {
 	_, err := oleutil.CallMethod(c.ComObject(), "Select")
 	return err
