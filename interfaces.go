@@ -2,7 +2,7 @@ package goxcel
 
 import "github.com/go-ole/go-ole"
 
-//noinspection GoNameStartsWithPackageName
+// noinspection GoNameStartsWithPackageName
 type (
 	HasReleaser interface {
 		Releaser() *Releaser
