@@ -9,6 +9,108 @@ import (
 	"github.com/devlights/goxcel/testutil"
 )
 
+func TestWorksheet_MaxRowCol(t *testing.T) {
+	f := MustInitGoxcel()
+	defer f()
+
+	g, r := MustNewGoxcel()
+	defer r()
+
+	g.MustSilent(true)
+
+	wbs := g.MustWorkbooks()
+	wb, wbr := wbs.MustAdd()
+	defer wbr()
+
+	ws := wb.MustSheets(1)
+
+	c := ws.MustCells(1, 100)
+	c.MustSetValue("hello")
+
+	c = ws.MustCells(100, 1)
+	c.MustSetValue("world")
+
+	maxRow, maxCol, err := ws.MaxRowCol()
+	if err != nil {
+		t.Error(err)
+	}
+
+	if maxRow != 100 {
+		t.Errorf("[want] 100\t[got] %v", maxRow)
+	}
+	if maxCol != 100 {
+		t.Errorf("[want] 100\t[got] %v", maxCol)
+	}
+
+	c = ws.MustCells(1, int(maxCol))
+	v := c.MustValue()
+	if v != "hello" {
+		t.Errorf("[want] hello\t[got] %v", v)
+	}
+
+	c = ws.MustCells(int(maxRow), 1)
+	v = c.MustValue()
+	if v != "world" {
+		t.Errorf("[want] world\t[got] %v", v)
+	}
+}
+
+func TestWorksheet_MaxCol(t *testing.T) {
+	f := MustInitGoxcel()
+	defer f()
+
+	g, r := MustNewGoxcel()
+	defer r()
+
+	g.MustSilent(true)
+
+	wbs := g.MustWorkbooks()
+	wb, wbr := wbs.MustAdd()
+	defer wbr()
+
+	ws := wb.MustSheets(1)
+
+	c := ws.MustCells(1, 100)
+	c.MustSetValue("hello")
+
+	maxCol, err := ws.MaxCol()
+	if err != nil {
+		t.Error(err)
+	}
+
+	if maxCol != 100 {
+		t.Errorf("[want] 100\t[got] %v", maxCol)
+	}
+}
+
+func TestWorksheet_MaxRow(t *testing.T) {
+	f := MustInitGoxcel()
+	defer f()
+
+	g, r := MustNewGoxcel()
+	defer r()
+
+	g.MustSilent(true)
+
+	wbs := g.MustWorkbooks()
+	wb, wbr := wbs.MustAdd()
+	defer wbr()
+
+	ws := wb.MustSheets(1)
+
+	c := ws.MustCells(100, 1)
+	c.MustSetValue("hello")
+
+	maxRow, err := ws.MaxRow()
+	if err != nil {
+		t.Error(err)
+	}
+
+	if maxRow != 100 {
+		t.Errorf("[want] 100\t[got] %v", maxRow)
+	}
+}
+
 func TestWorksheet_Columns(t *testing.T) {
 	f := MustInitGoxcel()
 	defer f()

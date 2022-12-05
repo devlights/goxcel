@@ -79,13 +79,13 @@ func (r *XlRange) Clear() error {
 	return nil
 }
 
-func (r *XlRange) Count() (int64, error) {
+func (r *XlRange) Count() (int32, error) {
 	v, err := oleutil.GetProperty(r.ComObject(), "Count")
 	if err != nil {
 		return 0, err
 	}
 
-	count := v.Val
+	count := v.Value().(int32)
 
 	return count, nil
 }
