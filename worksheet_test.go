@@ -9,6 +9,52 @@ import (
 	"github.com/devlights/goxcel/testutil"
 )
 
+func TestWorksheet_Columns(t *testing.T) {
+	f := MustInitGoxcel()
+	defer f()
+
+	g, r := MustNewGoxcel()
+	defer r()
+
+	g.MustSilent(true)
+
+	wbs := g.MustWorkbooks()
+	wb, wbr := wbs.MustAdd()
+	defer wbr()
+
+	ws := wb.MustSheets(1)
+	if ws == nil {
+		t.Error("ws is nil")
+	}
+
+	cols, err := ws.Columns()
+	if err != nil {
+		t.Error(err)
+	}
+
+	if cols == nil {
+		t.Error("[want] not-nil\t[got] nil")
+	}
+
+	cnt, err := cols.Count()
+	if err != nil {
+		t.Error(err)
+	}
+
+	const MAX_COL_COUNT = 16384
+	if cnt != MAX_COL_COUNT {
+		t.Errorf("[want] %v\t[got] %v", MAX_COL_COUNT, cnt)
+	}
+
+	if err := wb.SetSaved(true); err != nil {
+		t.Error(err)
+	}
+
+	if err := wb.Close(); err != nil {
+		t.Error(err)
+	}
+}
+
 func TestWorksheet_Rows(t *testing.T) {
 	f := MustInitGoxcel()
 	defer f()
