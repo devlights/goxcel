@@ -1,0 +1,22 @@
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task: build
+  build:
+    cmds:
+      - cmd: go build -v -race
+  fmt:
+    cmds:
+      - cmd: go fmt
+  vet:
+    cmds:
+      - cmd: go vet
+  clean:
+    cmds:
+      - cmd: go clean
+  test:
+    cmds:
+      - cmd: go test -v -p=1 ./...
+
