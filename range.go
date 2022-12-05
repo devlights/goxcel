@@ -38,6 +38,10 @@ func NewRange(ws *Worksheet, r *ole.IDispatch) *XlRange {
 	return newRange(ws, r)
 }
 
+func NewRangeFromCell(cell *Cell, c *ole.IDispatch) *XlRange {
+	return newRange(cell, c)
+}
+
 func NewRangeFromRange(ra *XlRange, c *ole.IDispatch) *XlRange {
 	return newRange(ra, c)
 }

@@ -47,6 +47,34 @@ func (c *Cell) Releaser() *Releaser {
 	return c.Goxcel().Releaser()
 }
 
+func (c *Cell) Row() (int32, error) {
+	v, err := oleutil.GetProperty(c.ComObject(), "Row")
+	if err != nil {
+		return -1, err
+	}
+
+	row, ok := v.Value().(int32)
+	if !ok {
+		return 0, ValueCantConvertToInt
+	}
+
+	return row, nil
+}
+
+func (c *Cell) Column() (int32, error) {
+	v, err := oleutil.GetProperty(c.ComObject(), "Column")
+	if err != nil {
+		return -1, err
+	}
+
+	column, ok := v.Value().(int32)
+	if !ok {
+		return 0, ValueCantConvertToInt
+	}
+
+	return column, nil
+}
+
 func (c *Cell) Value() (interface{}, error) {
 	v, err := oleutil.GetProperty(c.ComObject(), "Value")
 	if err != nil {
@@ -79,6 +107,17 @@ func (c *Cell) MustSetValue(value interface{}) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func (c *Cell) End(direction constants.XlDirection) (*XlRange, error) {
+	ra, err := oleutil.GetProperty(c.ComObject(), "End", int(direction))
+	if err != nil {
+		return nil, err
+	}
+
+	r := NewRangeFromCell(c, ra.ToIDispatch())
+
+	return r, nil
 }
 
 func (c *Cell) Select() error {

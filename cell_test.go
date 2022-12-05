@@ -9,6 +9,50 @@ import (
 	"github.com/devlights/goxcel/testutil"
 )
 
+func TestCell_End(t *testing.T) {
+	f := MustInitGoxcel()
+	defer f()
+
+	g, r := MustNewGoxcel()
+	defer r()
+
+	g.MustSilent(true)
+
+	wbs := g.MustWorkbooks()
+	wb, wbr := wbs.MustAdd()
+	defer wbr()
+
+	ws := wb.MustSheets(1)
+
+	rows, _ := ws.Rows()
+	cols, _ := ws.Columns()
+	rowsCount, _ := rows.Count()
+	colsCount, _ := cols.Count()
+
+	rowsCells, _ := ws.Cells(int(rowsCount), 1)
+	colsCells, _ := ws.Cells(1, int(colsCount))
+
+	rrange, err := rowsCells.End(constants.XlUp)
+	if err != nil {
+		t.Error(err)
+	}
+
+	rrow, _ := rrange.Row()
+	if rrow != 1 {
+		t.Errorf("[want] 1\t[got] %v", rrow)
+	}
+
+	crange, err := colsCells.End(constants.XlToLeft)
+	if err != nil {
+		t.Error(err)
+	}
+
+	ccol, _ := crange.Column()
+	if ccol != 1 {
+		t.Errorf("[want] 1\t[got] %v", ccol)
+	}
+}
+
 func TestCell_MustMethods(t *testing.T) {
 	f := MustInitGoxcel()
 	defer f()
