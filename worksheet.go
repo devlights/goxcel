@@ -100,6 +100,17 @@ func (ws *Worksheet) AllRange() (*XlRange, error) {
 	return xlrange, nil
 }
 
+func (ws *Worksheet) Rows() (*XlRange, error) {
+	ra, err := oleutil.GetProperty(ws.ComObject(), "Rows")
+	if err != nil {
+		return nil, err
+	}
+
+	xlrange := NewRange(ws, ra.ToIDispatch())
+
+	return xlrange, nil
+}
+
 func (ws *Worksheet) Cells(row int, col int) (*Cell, error) {
 	if row <= 0 {
 		e := fmt.Errorf("%w [row]", ValueMustBeGreaterThanZero)
