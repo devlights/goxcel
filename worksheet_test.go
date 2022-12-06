@@ -30,7 +30,7 @@ func TestWorksheet_MaxRowCol(t *testing.T) {
 	c = ws.MustCells(100, 1)
 	c.MustSetValue("world")
 
-	maxRow, maxCol, err := ws.MaxRowCol()
+	maxRow, maxCol, err := ws.MaxRowCol(1, 1)
 	if err != nil {
 		t.Error(err)
 	}
@@ -73,7 +73,7 @@ func TestWorksheet_MaxCol(t *testing.T) {
 	c := ws.MustCells(1, 100)
 	c.MustSetValue("hello")
 
-	maxCol, err := ws.MaxCol()
+	maxCol, err := ws.MaxCol(1)
 	if err != nil {
 		t.Error(err)
 	}
@@ -101,7 +101,7 @@ func TestWorksheet_MaxRow(t *testing.T) {
 	c := ws.MustCells(100, 1)
 	c.MustSetValue("hello")
 
-	maxRow, err := ws.MaxRow()
+	maxRow, err := ws.MaxRow(1)
 	if err != nil {
 		t.Error(err)
 	}

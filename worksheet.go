@@ -143,7 +143,7 @@ func (ws *Worksheet) Cells(row int, col int) (*Cell, error) {
 	return cell, nil
 }
 
-func (ws *Worksheet) MaxRow() (int32, error) {
+func (ws *Worksheet) MaxRow(col int) (int32, error) {
 	rows, err := ws.Rows()
 	if err != nil {
 		return -1, err
@@ -154,7 +154,7 @@ func (ws *Worksheet) MaxRow() (int32, error) {
 		return -1, err
 	}
 
-	cells, err := ws.Cells(int(count), 1)
+	cells, err := ws.Cells(int(count), col)
 	if err != nil {
 		return -1, err
 	}
@@ -172,7 +172,7 @@ func (ws *Worksheet) MaxRow() (int32, error) {
 	return maxRow, nil
 }
 
-func (ws *Worksheet) MaxCol() (int32, error) {
+func (ws *Worksheet) MaxCol(row int) (int32, error) {
 	cols, err := ws.Columns()
 	if err != nil {
 		return -1, err
@@ -183,7 +183,7 @@ func (ws *Worksheet) MaxCol() (int32, error) {
 		return -1, err
 	}
 
-	cells, err := ws.Cells(1, int(count))
+	cells, err := ws.Cells(row, int(count))
 	if err != nil {
 		return -1, err
 	}
@@ -201,13 +201,13 @@ func (ws *Worksheet) MaxCol() (int32, error) {
 	return maxCol, nil
 }
 
-func (ws *Worksheet) MaxRowCol() (row, col int32, err error) {
-	maxRow, err := ws.MaxRow()
+func (ws *Worksheet) MaxRowCol(row, col int) (maxRow, maxCol int32, err error) {
+	maxRow, err = ws.MaxRow(col)
 	if err != nil {
 		return -1, -1, err
 	}
 
-	maxCol, err := ws.MaxCol()
+	maxCol, err = ws.MaxCol(row)
 	if err != nil {
 		return -1, -1, err
 	}
