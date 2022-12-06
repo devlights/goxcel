@@ -76,10 +76,7 @@ func run() (int, string) {
 	c := ws.MustCells(1, 1)
 
 	// 6. Set the value to cell
-	if err := c.SetValue("こんにちはWorld"); err != nil {
-		log.Println(err)
-		return 6, ""
-	}
+	c.MustSetValue("こんにちはWorld")
 
 	p := filepath.Join(os.TempDir(), "helloworld.xlsx")
 	log.Printf("SAVE FILE: %s\n", p)
