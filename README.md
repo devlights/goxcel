@@ -11,7 +11,7 @@ This library works only on Windows.
 ## Install
 
 ```sh
-go get github.com/devlights/goxcel
+go get github.com/devlights/goxcel@latest
 ```
 
 ## Usage
