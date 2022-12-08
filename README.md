@@ -10,8 +10,8 @@ This library works only on Windows.
 
 ## Install
 
-```shell script
-go get -u github.com/devlights/goxcel
+```sh
+go get github.com/devlights/goxcel
 ```
 
 ## Usage
@@ -28,12 +28,10 @@ import (
 
 ```go
 func init() {
-	log.SetFlags(log.Flags() &^ log.LstdFlags)
+	log.SetFlags(0)
 }
 
 // main is entry point of this app.
-//
-// noinspection GoNilness
 func main() {
 	ret, xlsx := run()
 	if ret == 0 {
@@ -46,15 +44,15 @@ func main() {
 
 func run() (int, string) {
 	// 0. Initialize Goxcel
-	quitGoxcelFn := goxcel.MustInitGoxcel()
-	defer quitGoxcelFn()
+	quit := goxcel.MustInitGoxcel()
+	defer quit()
 
 	// 1. Create new Goxcel instance.
-	g, goxcelReleaseFn := goxcel.MustNewGoxcel()
+	g, release := goxcel.MustNewGoxcel()
 
 	// must call goxcel's release function when function exited
 	// otherwise excel process was remained.
-	defer goxcelReleaseFn()
+	defer release()
 
 	// optional settings
 	visible := false
@@ -64,10 +62,10 @@ func run() (int, string) {
 	wbs := g.MustWorkbooks()
 
 	// 3. Add Workbook
-	wb, wbReleaseFn := wbs.MustAdd()
+	wb, wbRelease := wbs.MustAdd()
 
 	// call workbook's release funciton
-	defer wbReleaseFn()
+	defer wbRelease()
 
 	// 4. Get Worksheet
 	ws := wb.MustSheets(1)
