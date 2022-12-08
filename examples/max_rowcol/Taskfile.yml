@@ -1,0 +1,9 @@
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - go build
+      - max_rowcol.exe
+      - go clean
+
