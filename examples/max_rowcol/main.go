@@ -57,7 +57,9 @@ func run() error {
 	}
 	fmt.Printf("maxRow=%v\tmaxCol=%v\n", maxRow, maxCol)
 
-	<-time.After(5 * time.Second)
+	timeLimit := 5 * time.Second
+	appLog.Printf("Exit app %v seconds later...", timeLimit)
+	<-time.After(timeLimit)
 
 	return nil
 }
