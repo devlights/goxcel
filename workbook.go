@@ -114,3 +114,13 @@ func (w *Workbook) Close() error {
 	_, err := oleutil.CallMethod(w.ComObject(), "Close", false)
 	return err
 }
+
+func (w *Workbook) PrintOut() error {
+	_, err := oleutil.CallMethod(w.ComObject(), "PrintOut", nil)
+	return err
+}
+
+func (w *Workbook) ExportAsFixedFormat(fmtType constants.XlFixedFormatType, path string) error {
+	_, err := oleutil.CallMethod(w.ComObject(), "ExportAsFixedFormat", int(fmtType), path)
+	return err
+}
