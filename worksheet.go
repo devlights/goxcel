@@ -283,3 +283,8 @@ func (ws *Worksheet) ExportAsFixedFormat(fmtType constants.XlFixedFormatType, pa
 	_, err := oleutil.CallMethod(ws.ComObject(), "ExportAsFixedFormat", int(fmtType), path)
 	return err
 }
+
+func (ws *Worksheet) PrintOut() error {
+	_, err := oleutil.CallMethod(ws.ComObject(), "PrintOut", nil)
+	return err
+}
