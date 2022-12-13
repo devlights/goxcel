@@ -288,3 +288,14 @@ func (ws *Worksheet) PrintOut() error {
 	_, err := oleutil.CallMethod(ws.ComObject(), "PrintOut", nil)
 	return err
 }
+
+func (ws *Worksheet) UsedRange() (*XlRange, error) {
+	v, err := oleutil.GetProperty(ws.ComObject(), "UsedRange")
+	if err != nil {
+		return nil, err
+	}
+
+	ra := NewRangeFromWorksheet(ws, v.ToIDispatch())
+
+	return ra, nil
+}

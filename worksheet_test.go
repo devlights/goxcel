@@ -1,6 +1,7 @@
 package goxcel
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
@@ -8,6 +9,53 @@ import (
 	"github.com/devlights/goxcel/constants"
 	"github.com/devlights/goxcel/testutil"
 )
+
+func TestWorksheet_UsedRange(t *testing.T) {
+	f := MustInitGoxcel()
+	defer f()
+
+	g, r := MustNewGoxcel()
+	defer r()
+
+	g.MustSilent(true)
+
+	wbs := g.MustWorkbooks()
+	wb, wbr := wbs.MustAdd()
+	defer wbr()
+
+	ws := wb.MustSheets(1)
+
+	c := ws.MustCells(1, 1)
+	c.MustSetValue(fmt.Sprintf("%v_%v", 1, 1))
+
+	c = ws.MustCells(100, 1)
+	c.MustSetValue(fmt.Sprintf("%v_%v", 100, 1))
+
+	c = ws.MustCells(50, 100)
+	c.MustSetValue(fmt.Sprintf("%v_%v", 50, 100))
+
+	// UsedRange は、書式設定されているだけのセルも範囲に入る
+	c = ws.MustCells(200, 1)
+	interior, _ := c.Interior()
+	_ = interior.SetColor(constants.RgbGreen)
+
+	ra, err := ws.UsedRange()
+	if err != nil {
+		t.Error(err)
+	}
+
+	rows, _ := ra.Rows()
+	count, _ := rows.Count()
+	if count != 200 {
+		t.Errorf("[want] 200\t[got] %v", count)
+	}
+
+	cols, _ := ra.Columns()
+	count, _ = cols.Count()
+	if count != 100 {
+		t.Errorf("[want] 100\t[got] %v", count)
+	}
+}
 
 func TestWorksheet_MaxRowCol(t *testing.T) {
 	f := MustInitGoxcel()
@@ -29,6 +77,11 @@ func TestWorksheet_MaxRowCol(t *testing.T) {
 
 	c = ws.MustCells(100, 1)
 	c.MustSetValue("world")
+
+	// MaxRow, MaxCol, MaxRowCol は、書式設定されているだけのセルは範囲に入れない
+	c = ws.MustCells(200, 1)
+	interior, _ := c.Interior()
+	_ = interior.SetColor(constants.RgbGreen)
 
 	maxRow, maxCol, err := ws.MaxRowCol(1, 1)
 	if err != nil {
