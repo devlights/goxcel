@@ -58,6 +58,10 @@ func NewRangeFromShape(s *Shape, c *ole.IDispatch) *XlRange {
 	return newRange(s, c)
 }
 
+func NewRangeFromWorksheet(ws *Worksheet, c *ole.IDispatch) *XlRange {
+	return newRange(ws, c)
+}
+
 func (r *XlRange) ComObject() *ole.IDispatch {
 	return r.comObj
 }
