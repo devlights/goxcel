@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlFileFormatは、ブックを保存する場合のファイル形式を表します。
+	// XlFileFormat は、ブックを保存する場合のファイル形式を表します。
 	XlFileFormat int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlAddIn                       XlFileFormat = 18    //Microsoft Excel 97-2003 アドイン
 	XlAddIn8                      XlFileFormat = 18    //Microsoft Excel 97-2003 アドイン

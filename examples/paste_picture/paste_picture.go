@@ -4,7 +4,7 @@ import (
 	"flag"
 	"image"
 	_ "image/png"
-	"io/ioutil"
+	"io"
 	"log"
 	"os"
 	"path/filepath"
@@ -21,7 +21,7 @@ var (
 )
 
 var (
-	appLog, errLog, dbgLog *log.Logger
+	errLog, dbgLog *log.Logger
 )
 
 func init() {
@@ -37,9 +37,9 @@ func init() {
 func main() {
 	flag.Parse()
 
-	appLog, errLog, dbgLog = log.New(os.Stdout, "", 0), log.New(os.Stderr, "", 0), log.New(os.Stdout, "", 0)
+	_, errLog, dbgLog = log.New(os.Stdout, "", 0), log.New(os.Stderr, "", 0), log.New(os.Stdout, "", 0)
 	if !debug {
-		dbgLog.SetOutput(ioutil.Discard)
+		dbgLog.SetOutput(io.Discard)
 	}
 
 	if srcdir == "" {

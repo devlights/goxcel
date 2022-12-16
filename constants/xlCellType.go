@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlCellTypeは、セルの種類を表します。
+	// XlCellType は、セルの種類を表します。
 	XlCellType int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlCellTypeAllFormatConditions  XlCellType = -4172 //表示形式が設定されているセル
 	XlCellTypeAllValidation        XlCellType = -4174 //条件の設定が含まれているセル

@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlFindLookInは、検索するデータの種類を表します。
+	// XlFindLookIn は、検索するデータの種類を表します。
 	XlFindLookIn int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlComments XlFindLookIn = -4144 //コメント
 	XlFormulas XlFindLookIn = -4123 //数式

@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlIMEModeは、入力モード値を表します。
+	// XlIMEMode は、入力モード値を表します。
 	XlIMEMode int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlIMEModeAlpha        XlIMEMode = 8  //半角英数字
 	XlIMEModeAlphaFull    XlIMEMode = 7  //全角英数字

@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlPivotTableSourceTypeは、レポート データのソースを表します。
+	// XlPivotTableSourceType は、レポート データのソースを表します。
 	XlPivotTableSourceType int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlConsolidation XlPivotTableSourceType = 3     //複数のワークシート範囲
 	XlDatabase      XlPivotTableSourceType = 1     //Excel のリスト/データベース

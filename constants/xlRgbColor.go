@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlRgbColorは、カラーコード値を表します。
+	// XlRgbColor は、カラーコード値を表します。
 	XlRgbColor int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	RgbBlack                XlRgbColor = 0        //黒
 	RgbNavy                 XlRgbColor = 8388608  //ネイビー

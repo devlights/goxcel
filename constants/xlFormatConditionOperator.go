@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlFormatConditionOperatorは、数式をセル内の値に対して比較するため、または xlBetween および xlNotBetween の場合 2 つの数式を比較するために使用する演算子を表します。
+	// XlFormatConditionOperator は、数式をセル内の値に対して比較するため、または xlBetween および xlNotBetween の場合 2 つの数式を比較するために使用する演算子を表します。
 	XlFormatConditionOperator int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlBetween      XlFormatConditionOperator = 1 //間。2 つの数式が指定されている場合にのみ使用できます。
 	XlEqual        XlFormatConditionOperator = 3 //等しい

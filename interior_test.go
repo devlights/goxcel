@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-// TestInterior_Misc is test function following cases
+// TestInterior_Misc is tested function following cases
 //
 // - Color
 func TestInterior_Misc(t *testing.T) {

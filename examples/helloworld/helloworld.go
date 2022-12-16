@@ -41,7 +41,7 @@ func run() int {
 	defer goxcelReleaseFn()
 
 	// optional settings
-	visible := false
+	const visible = false
 	_ = g.Silent(visible)
 
 	// 2. Get Workbooks instance.

@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlBordersIndexは、設定する罫線を表します。
+	// XlBordersIndex は、設定する罫線を表します。
 	XlBordersIndex int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlDiagonalDown     XlBordersIndex = 5  // 範囲内の各セルの左上隅から右下への罫線
 	XlDiagonalUp       XlBordersIndex = 6  // 範囲内の各セルの左下隅から右上への罫線

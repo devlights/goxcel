@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlPasteTypeは、貼り付ける部分を表します。
+	// XlPasteType は、貼り付ける部分を表します。
 	XlPasteType int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlPasteAll                          XlPasteType = -4104 //すべてを貼り付けます。
 	XlPasteAllExceptBorders             XlPasteType = 7     //輪郭以外のすべてを貼り付けます。

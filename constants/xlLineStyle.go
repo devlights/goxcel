@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlLineStyleは、線の種類を表します。
+	// XlLineStyle は、線の種類を表します。
 	XlLineStyle int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlContinuous    XlLineStyle = 1     //実線
 	XlDash          XlLineStyle = -4115 //破線

@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-// TestFont_Misc is test function following cases
+// TestFont_Misc is tested function following cases
 //
 // - Bold
 //

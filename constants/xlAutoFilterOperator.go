@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlAutoFilterOperatorは、フィルターによって適用される 2 つの条件を関連付けるために使用する演算子を表します。
+	// XlAutoFilterOperator は、フィルターによって適用される 2 つの条件を関連付けるために使用する演算子を表します。
 	XlAutoFilterOperator int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlAnd             XlAutoFilterOperator = 1  //抽出条件 1 と抽出条件 2 の論理演算子 AND
 	XlBottom10Items   XlAutoFilterOperator = 4  //表示される最低値項目 (抽出条件 1 で指定される項目数)

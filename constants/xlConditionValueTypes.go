@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlConditionValueTypesは、使用できる条件値の種類を表します。
+	// XlConditionValueTypes は、使用できる条件値の種類を表します。
 	XlConditionValueTypes int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlConditionValueAutomaticMax XlConditionValueTypes = 7  //最長のデータ バーは、範囲の最大値に比例します。
 	XlConditionValueAutomaticMin XlConditionValueTypes = 6  //最短のデータ バーは、範囲の最小値に比例します。

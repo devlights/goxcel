@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlFormatConditionTypeは、セル値または演算式のどちらを基に条件付き書式を設定するかを表します。
+	// XlFormatConditionType は、セル値または演算式のどちらを基に条件付き書式を設定するかを表します。
 	XlFormatConditionType int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlAboveAverageCondition XlFormatConditionType = 12 //平均以上の条件
 	XlBlanksCondition       XlFormatConditionType = 10 //空白の条件

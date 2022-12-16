@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// MsoAutoShapeTypeは、 AutoShapeオブジェクトの図形の種類を表します。
+	// MsoAutoShapeType は、 AutoShapeオブジェクトの図形の種類を表します。
 	MsoAutoShapeType int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	msoShape16pointStar                      MsoAutoShapeType = 94  //星 16。
 	MsoShape24pointStar                      MsoAutoShapeType = 95  //星 24。
