@@ -257,6 +257,15 @@ func (ws *Worksheet) VPageBreaks() (*VPageBreaks, error) {
 	return vpbs, nil
 }
 
+func (ws *Worksheet) ResetAllPageBreaks() error {
+	_, err := oleutil.CallMethod(ws.ComObject(), "ResetAllPageBreaks")
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (ws *Worksheet) Shapes() (*Shapes, error) {
 	v, err := oleutil.GetProperty(ws.ComObject(), "Shapes")
 	if err != nil {
