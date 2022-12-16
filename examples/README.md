@@ -21,7 +21,7 @@ This directory contains following examples.
 - select first cell
   - Example of Worksheets.Item and Worksheet.Activate
 - self_comobject_handling
-  - Example of how to handling Com-Object with Goxcel
+  - Example of how to handle Com-Object with Goxcel
 - shapes_numbering
   - Example of Worksheet.Shapes
 - sheet_footer_adjust

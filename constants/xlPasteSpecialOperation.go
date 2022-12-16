@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlPasteSpecialOperationは、ワークシートの対象セルで数値データが計算される方法を表します。
+	// XlPasteSpecialOperation は、ワークシートの対象セルで数値データが計算される方法を表します。
 	XlPasteSpecialOperation int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlPasteSpecialOperationAdd      XlPasteSpecialOperation = 2     //コピーしたデータは、対象セルの値に追加されます。
 	XlPasteSpecialOperationDivide   XlPasteSpecialOperation = 5     //コピーしたデータは、対象セルの値によって分割されます。

@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlFormatFilterTypesは、書式フィルターの種類を表します。
+	// XlFormatFilterTypes は、書式フィルターの種類を表します。
 	XlFormatFilterTypes int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	FilterBottom        XlFormatFilterTypes = 0 //下
 	FilterBottomPercent XlFormatFilterTypes = 2 //最低パーセント

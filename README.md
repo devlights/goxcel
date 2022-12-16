@@ -19,14 +19,12 @@ go get github.com/devlights/goxcel@latest
 ### Import statement
 
 ```go
+package main
+
 import (
     "github.com/devlights/goxcel"
 )
-```
 
-### HelloWorld
-
-```go
 func init() {
 	log.SetFlags(0)
 }
@@ -92,5 +90,5 @@ func run() (int, string) {
 }
 ```
 
-Also look at the examples directory :)
+Also look at the "examples" directory :)
 

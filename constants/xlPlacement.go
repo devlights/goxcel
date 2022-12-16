@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlPlacementは、シェイプが基になるセルを接続する方法を表します。
+	// XlPlacement は、シェイプが基になるセルを接続する方法を表します。
 	XlPlacement int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://docs.microsoft.com/ja-jp/dotnet/api/microsoft.office.interop.excel.xlplacement?view=excel-pia
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlMoveAndSize  XlPlacement = 1 //オブジェクトはセルと共に移動し、セルに合わせてサイズが変更されます。
 	XlMove         XlPlacement = 2 //オブジェクトはセルと共に移動します。

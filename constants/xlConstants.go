@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlsxConstantsは、Excel の各種メソッドで使用される定数を表します。
+	// XlsxConstants は、Excel の各種メソッドで使用される定数を表します。
 	XlsxConstants int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	Xl3DBar                 XlsxConstants = -4099 //3D 横棒
 	Xl3DEffects1            XlsxConstants = 13    //3-D 1

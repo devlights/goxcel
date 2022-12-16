@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// MsoShapeTypeは、図形の種類または範囲を表します。
+	// MsoShapeType は、図形の種類または範囲を表します。
 	MsoShapeType int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	MsoAutoShape         MsoShapeType = 1  //オートシェイプ
 	MsoCallout           MsoShapeType = 2  //引き出し線

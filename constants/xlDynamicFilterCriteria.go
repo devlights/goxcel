@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlDynamicFilterCriteriaは、フィルターの条件を表します。
+	// XlDynamicFilterCriteria は、フィルターの条件を表します。
 	XlDynamicFilterCriteria int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlFilterAboveAverage              XlDynamicFilterCriteria = 33 //平均を上回る値をすべてフィルター。
 	XlFilterAllDatesInPeriodApril     XlDynamicFilterCriteria = 24 //4 月の日付をすべてフィルター。

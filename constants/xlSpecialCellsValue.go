@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlSpecialCellsValueは、特定の種類の値を持つセルを表します。
+	// XlSpecialCellsValue は、特定の種類の値を持つセルを表します。
 	XlSpecialCellsValue int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlErrors     XlSpecialCellsValue = 16 //エラーのあるセル
 	XlLogical    XlSpecialCellsValue = 4  //論理値のあるセル

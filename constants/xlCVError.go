@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlCVErrorは、セルのエラー番号と値を表します。
+	// XlCVError は、セルのエラー番号と値を表します。
 	XlCVError int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlErrDiv0  XlCVError = 2007 //エラー番号 : 2007
 	XlErrNA    XlCVError = 2042 //エラー番号 : 2042

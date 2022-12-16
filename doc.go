@@ -1,4 +1,4 @@
-// goxcel is a library to operate Excel made in Golang.
+// Package goxcel is a library to operate Excel made in Golang.
 // This library works only on Windows.
 //
 // Goxcel is the main struct in this library. NewGoxcel() is the staring point.

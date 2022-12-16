@@ -227,9 +227,9 @@ func TestWorksheet_Columns(t *testing.T) {
 		t.Error(err)
 	}
 
-	const MAX_COL_COUNT = 16384
-	if cnt != MAX_COL_COUNT {
-		t.Errorf("[want] %v\t[got] %v", MAX_COL_COUNT, cnt)
+	const MaxColCount = 16384
+	if cnt != MaxColCount {
+		t.Errorf("[want] %v\t[got] %v", MaxColCount, cnt)
 	}
 
 	if err := wb.SetSaved(true); err != nil {
@@ -273,9 +273,9 @@ func TestWorksheet_Rows(t *testing.T) {
 		t.Error(err)
 	}
 
-	const MAX_ROW_COUNT = 1048576
-	if cnt != MAX_ROW_COUNT {
-		t.Errorf("[want] %v\t[got] %v", MAX_ROW_COUNT, cnt)
+	const MaxRowCount = 1048576
+	if cnt != MaxRowCount {
+		t.Errorf("[want] %v\t[got] %v", MaxRowCount, cnt)
 	}
 
 	if err := wb.SetSaved(true); err != nil {

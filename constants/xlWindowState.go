@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlWindowStateは、ウィンドウの状態を表します。
+	// XlWindowState は、ウィンドウの状態を表します。
 	XlWindowState int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlMaximized XlWindowState = -4137 //最大化
 	XlMinimized XlWindowState = -4140 //最小化

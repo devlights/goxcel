@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-// TestHPageBreaks_Misc is test function following cases
+// TestHPageBreaks_Misc is tested function following cases
 //
 // - Location
 // - SetLocation

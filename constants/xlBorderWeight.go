@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlBorderWeightは、罫線の太さを表します。
+	// XlBorderWeight は、罫線の太さを表します。
 	XlBorderWeight int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://excel-ubara.com/EXCEL/EXCEL905.html
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlHairline XlBorderWeight = 1     //細線 (最も細い罫線)
 	XlMedium   XlBorderWeight = -4138 //普通

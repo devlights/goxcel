@@ -1,7 +1,7 @@
 package constants
 
 type (
-	// XlPageOrientationは、ワークシートを印刷する場合のページの方向を表します。
+	// XlPageOrientation は、ワークシートを印刷する場合のページの方向を表します。
 	XlPageOrientation int
 )
 
@@ -10,7 +10,7 @@ type (
 // REFERENCES::
 //   - https://docs.microsoft.com/ja-jp/office/vba/api/excel.xlpageorientation
 //
-//noinspection GoUnusedConst
+// noinspection GoUnusedConst
 const (
 	XlPortrait  XlPageOrientation = 1 // 縦
 	XlLandscape XlPageOrientation = 2 // 横
