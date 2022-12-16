@@ -9,6 +9,39 @@ import (
 	"github.com/devlights/goxcel/testutil"
 )
 
+func TestCell_PageBreak(t *testing.T) {
+	quit := MustInitGoxcel()
+	defer quit()
+
+	excel, release := MustNewGoxcel()
+	defer release()
+
+	_ = excel.SetVisible(true)
+
+	wbs := excel.MustWorkbooks()
+	wb, wbr := wbs.MustAdd()
+	defer wbr()
+
+	ws := wb.MustSheets(1)
+
+	rows := []int{2, 4, 6, 8, 10}
+	for _, row := range rows {
+		cell, _ := ws.Cells(row, 5)
+
+		err := cell.PageBreak(constants.XlPageBreakManual)
+		if err != nil {
+			t.Error(err)
+		}
+
+		cell.MustSetValue("hello")
+	}
+
+	hpb, _ := ws.HPageBreaks()
+	if count, _ := hpb.Count(); int(count) != len(rows) {
+		t.Errorf("[want] 5\t[got] %v", count)
+	}
+}
+
 func TestCell_End(t *testing.T) {
 	f := MustInitGoxcel()
 	defer f()

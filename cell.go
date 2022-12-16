@@ -169,3 +169,12 @@ func (c *Cell) SetNumberFormatLocal(format constants.NumberFormatLocal) error {
 
 	return nil
 }
+
+func (c *Cell) PageBreak(pageBreakType constants.XlPageBreak) error {
+	_, err := oleutil.PutProperty(c.ComObject(), "PageBreak", int(pageBreakType))
+	if err != nil {
+		return err
+	}
+
+	return err
+}
