@@ -48,7 +48,7 @@ func run() (int, string) {
 	defer quit()
 
 	// 1. Create new Goxcel instance.
-	g, release := goxcel.MustNewGoxcel()
+	excel, release := goxcel.MustNewGoxcel()
 
 	// must call goxcel's release function when function exited
 	// otherwise excel process was remained.
@@ -56,10 +56,10 @@ func run() (int, string) {
 
 	// optional settings
 	visible := false
-	g.MustSilent(visible)
+	excel.MustSilent(visible)
 
 	// 2. Get Workbooks instance.
-	wbs := g.MustWorkbooks()
+	wbs := excel.MustWorkbooks()
 
 	// 3. Add Workbook
 	wb, wbRelease := wbs.MustAdd()
@@ -86,7 +86,7 @@ func run() (int, string) {
 	}
 
 	// Workbook::SetSaved(true) and Workbook::Close() is automatically called when `defer wbReleaseFn()`.
-	// Excel::Quit() and Excel::Release() is automatically called when `defer goxcelReleaseFn()`.
+	// Excel::Quit() and Excel::Release() is automatically called when `defer release()`.
 
 	return 0, p
 }
