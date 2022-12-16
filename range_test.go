@@ -1,9 +1,41 @@
 package goxcel
 
 import (
+	"github.com/devlights/goxcel/constants"
 	"github.com/devlights/goxcel/testutil"
 	"testing"
 )
+
+func TestXlRange_PageBreak(t *testing.T) {
+	quit := MustInitGoxcel()
+	defer quit()
+
+	excel, release := MustNewGoxcel()
+	defer release()
+
+	wbs := excel.MustWorkbooks()
+	wb, wbr := wbs.MustAdd()
+	defer wbr()
+
+	ws := wb.MustSheets(1)
+
+	rows := []int{2, 4, 6, 8, 10}
+	for _, row := range rows {
+		ra, _ := ws.Range(row, 5, row, 5)
+
+		err := ra.PageBreak(constants.XlPageBreakManual)
+		if err != nil {
+			t.Error(err)
+		}
+
+		ra.MustSetValue("hello")
+	}
+
+	hpb, _ := ws.HPageBreaks()
+	if count, _ := hpb.Count(); int(count) != len(rows) {
+		t.Errorf("[want] 5\t[got] %v", count)
+	}
+}
 
 func TestXlRange_Count(t *testing.T) {
 	testutil.Interval()

@@ -203,8 +203,24 @@ func (r *XlRange) SetValue(value interface{}) error {
 	return nil
 }
 
+func (r *XlRange) MustSetValue(value any) {
+	err := r.SetValue(value)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func (r *XlRange) SetNumberFormatLocal(format constants.NumberFormatLocal) error {
 	_, err := oleutil.PutProperty(r.ComObject(), "NumberFormatLocal", string(format))
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *XlRange) PageBreak(pageBreakType constants.XlPageBreak) error {
+	_, err := oleutil.PutProperty(r.ComObject(), "PageBreak", int(pageBreakType))
 	if err != nil {
 		return err
 	}
