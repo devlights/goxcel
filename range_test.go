@@ -1,10 +1,44 @@
 package goxcel
 
 import (
+	"fmt"
 	"github.com/devlights/goxcel/constants"
 	"github.com/devlights/goxcel/testutil"
 	"testing"
 )
+
+func TestXlRange_CopyPicture(t *testing.T) {
+	quit := MustInitGoxcel()
+	defer quit()
+
+	excel, release := MustNewGoxcel()
+	defer release()
+
+	wbs := excel.MustWorkbooks()
+	wb, wbr := wbs.MustAdd()
+	defer wbr()
+
+	ws := wb.MustSheets(1)
+
+	rows := []int{1, 2, 3, 4, 5}
+	for _, row := range rows {
+		cols := []int{1, 2, 3, 4, 5}
+		for _, col := range cols {
+			c, _ := ws.Cells(row, col)
+			c.MustSetValue(fmt.Sprintf("%v,%v", row, col))
+		}
+	}
+
+	rng, _ := ws.UsedRange()
+	_ = rng.Select()
+
+	err := rng.CopyPicture(constants.XlScreen, constants.XlBitmap)
+	if err != nil {
+		t.Error(err)
+	}
+
+	// 結果はクリップボードにコピーされている
+}
 
 func TestXlRange_PageBreak(t *testing.T) {
 	quit := MustInitGoxcel()

@@ -228,6 +228,20 @@ func (r *XlRange) PageBreak(pageBreakType constants.XlPageBreak) error {
 	return nil
 }
 
+func (r *XlRange) Select() error {
+	_, err := oleutil.CallMethod(r.ComObject(), "Select")
+	return err
+}
+
+func (r *XlRange) CopyPicture(appearance constants.XlPictureAppearance, format constants.XlCopyPictureFormat) error {
+	_, err := oleutil.CallMethod(r.ComObject(), "CopyPicture", int(appearance), int(format))
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (r *XlRange) Walk(walkFn func(r *XlRange, c *Cell, row, col int) error) (*Cell, error) {
 	rows, err := r.Rows()
 	if err != nil {
