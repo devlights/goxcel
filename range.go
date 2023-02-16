@@ -6,6 +6,8 @@ import (
 	"github.com/devlights/goxcel/constants"
 	"github.com/go-ole/go-ole"
 	"github.com/go-ole/go-ole/oleutil"
+	"github.com/skanehira/clipboard-image/v2"
+	"io"
 )
 
 type (
@@ -235,6 +237,25 @@ func (r *XlRange) Select() error {
 
 func (r *XlRange) CopyPicture(appearance constants.XlPictureAppearance, format constants.XlCopyPictureFormat) error {
 	_, err := oleutil.CallMethod(r.ComObject(), "CopyPicture", int(appearance), int(format))
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *XlRange) CopyPictureToFile(writer io.Writer, appearance constants.XlPictureAppearance, format constants.XlCopyPictureFormat) error {
+	err := r.CopyPicture(appearance, format)
+	if err != nil {
+		return err
+	}
+
+	reader, err := clipboard.Read()
+	if err != nil {
+		return err
+	}
+
+	_, err = io.Copy(writer, reader)
 	if err != nil {
 		return err
 	}
