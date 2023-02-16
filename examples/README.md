@@ -16,6 +16,10 @@ This directory contains following examples.
   - Example of Shapes.AddPicture
 - printer_orientation_adjust
   - Example of Worksheet.PageSetup
+- range_copy_picture
+  - Example of XlRange.CopyPicture
+- range_copy_picture_to_file
+  - Example of XlRange.CopyPictureToFile
 - range_walk
   - Example of XlRange.Walk
 - select first cell
@@ -71,6 +75,20 @@ $ go run github.com/devlights/goxcel/examples/pagebreaks -f /path/to/excel-file
 
 ```shell script
 $ go run github.com/devlights/goxcel/examples/printer_orientation_adjust -d /path/to/excel-dir -o [landscape|portrait]
+```
+
+- range_copy_picture
+
+```shell
+$ cd examples/range_copy_picture
+$ go run main.go
+```
+
+- range_copy_picture_to_file
+
+```shell
+$ cd examples/range_copy_picture_to_file
+$ go run main.go
 ```
 
 - range_walk
