@@ -20,6 +20,8 @@ This directory contains following examples.
   - Example of XlRange.CopyPicture
 - range_copy_picture_to_file
   - Example of XlRange.CopyPictureToFile
+- range_copy_picture_allsheets
+  - Example of XlRange.CopyPictureToFile
 - range_walk
   - Example of XlRange.Walk
 - select first cell
@@ -88,6 +90,13 @@ $ go run main.go
 
 ```shell
 $ cd examples/range_copy_picture_to_file
+$ go run main.go
+```
+
+- range_copy_picture_allsheets
+
+```shell
+$ cd examples/range_copy_picture_allsheets
 $ go run main.go
 ```
 
