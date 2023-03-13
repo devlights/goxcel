@@ -1,0 +1,10 @@
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - cmd: go build -o app.exe main.go
+      - cmd: cmd /c "del result.xlsx"
+        ignore_error: true
+      - cmd: ./app.exe
+      - cmd: cmd /c "start result.xlsx"
