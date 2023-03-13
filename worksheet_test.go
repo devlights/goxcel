@@ -10,6 +10,29 @@ import (
 	"github.com/devlights/goxcel/testutil"
 )
 
+func TestWorksheet_HyperLinks(t *testing.T) {
+	quit := MustInitGoxcel()
+	defer quit()
+
+	excel, release := MustNewGoxcel()
+	defer release()
+
+	wbs := excel.MustWorkbooks()
+	wb, wbr := wbs.MustAdd()
+	defer wbr()
+
+	ws := wb.MustSheets(1)
+
+	hl, err := ws.HyperLinks()
+	if err != nil {
+		t.Error(err)
+	}
+
+	if hl == nil {
+		t.Errorf("[want] not nil\t[got] nil")
+	}
+}
+
 func TestWorksheet_ResetAllPageBreaks(t *testing.T) {
 	quit := MustInitGoxcel()
 	defer quit()
