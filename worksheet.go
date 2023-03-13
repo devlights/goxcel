@@ -308,3 +308,14 @@ func (ws *Worksheet) UsedRange() (*XlRange, error) {
 
 	return ra, nil
 }
+
+func (ws *Worksheet) HyperLinks() (*HyperLinks, error) {
+	v, err := oleutil.GetProperty(ws.ComObject(), "HyperLinks")
+	if err != nil {
+		return nil, err
+	}
+
+	hl := NewHyperLinks(ws, v.ToIDispatch())
+
+	return hl, nil
+}
