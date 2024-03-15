@@ -8,6 +8,30 @@ import (
 	"github.com/devlights/goxcel/testutil"
 )
 
+func createExcelBook(xlsxPath string) {
+	var err error
+
+	if _, err = os.Stat(xlsxPath); !os.IsNotExist(err) {
+		err = os.Remove(xlsxPath)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	quit := MustInitGoxcel()
+	defer quit()
+
+	excel, release := MustNewGoxcel()
+	defer release()
+
+	excel.MustSilent(false)
+	wbs := excel.MustWorkbooks()
+	wb, wbRelease := wbs.MustAdd()
+	defer wbRelease()
+
+	wb.MustSaveAs(xlsxPath)
+}
+
 func TestWorkbook_MustMethods(t *testing.T) {
 	f := MustInitGoxcel()
 	defer f()
@@ -39,6 +63,10 @@ func TestWorkbook_Save(t *testing.T) {
 	testutil.Interval()
 	defer testutil.Interval()
 
+	userHomeDir, _ := os.UserHomeDir()
+	xlsxPath := filepath.Join(userHomeDir, "Book1.xlsx")
+	createExcelBook(xlsxPath)
+
 	g, r, err := NewGoxcel()
 
 	if err != nil {
@@ -55,8 +83,6 @@ func TestWorkbook_Save(t *testing.T) {
 		t.Error(err)
 	}
 
-	userHomeDir, _ := os.UserHomeDir()
-	xlsxPath := filepath.Join(userHomeDir, "Book1.xlsx")
 	wb, wbReleaseFn, _ := wbs.Open(xlsxPath)
 	defer wbReleaseFn()
 
@@ -76,6 +102,10 @@ func TestWorkbook_SaveAs(t *testing.T) {
 	testutil.Interval()
 	defer testutil.Interval()
 
+	userHomeDir, _ := os.UserHomeDir()
+	srcXlsxPath := filepath.Join(userHomeDir, "Book1.xlsx")
+	createExcelBook(srcXlsxPath)
+
 	g, r, err := NewGoxcel()
 
 	if err != nil {
@@ -92,8 +122,6 @@ func TestWorkbook_SaveAs(t *testing.T) {
 		t.Error(err)
 	}
 
-	userHomeDir, _ := os.UserHomeDir()
-	srcXlsxPath := filepath.Join(userHomeDir, "Book1.xlsx")
 	wb, wbReleaseFn, _ := wbs.Open(srcXlsxPath)
 	defer wbReleaseFn()
 

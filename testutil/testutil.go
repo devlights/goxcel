@@ -1,6 +1,8 @@
 package testutil
 
-import "time"
+import (
+	"time"
+)
 
 func Interval() {
 	time.Sleep(3 * time.Second)

@@ -96,8 +96,22 @@ func (w *Workbook) Save() error {
 	return err
 }
 
+func (w *Workbook) MustSave() {
+	err := w.Save()
+	if err != nil {
+		panic(err)
+	}
+}
+
 func (w *Workbook) SaveAs(filePath string) error {
 	return w.SaveAsWithFileFormat(filePath, constants.XlOpenXMLWorkbook)
+}
+
+func (w *Workbook) MustSaveAs(filePath string) {
+	err := w.SaveAs(filePath)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func (w *Workbook) SaveAsWithFileFormat(filePath string, format constants.XlFileFormat) error {
