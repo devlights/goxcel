@@ -34,7 +34,7 @@ func run() (int, string) {
 	// 1. Create new Goxcel instance.
 	g, goxcelReleaseFn := goxcel.MustNewGoxcel()
 
-	// must call goxcel's release function when function exited
+	// must call goxcel release function when function exited
 	// otherwise excel process was remained.
 	defer goxcelReleaseFn()
 
@@ -48,7 +48,7 @@ func run() (int, string) {
 	// 3. Add Workbook
 	wb, wbReleaseFn := wbs.MustAdd()
 
-	// call workbook's release funciton
+	// call workbook's release function
 	defer wbReleaseFn()
 
 	// 4. Get Worksheet
@@ -67,10 +67,7 @@ func run() (int, string) {
 	log.Printf("SAVE FILE: %s\n", p)
 
 	// 7. Save
-	if err := wb.SaveAs(p); err != nil {
-		log.Println(err)
-		return 7, ""
-	}
+	wb.MustSaveAs(p)
 
 	// Workbook::SetSaved(true) and Workbook::Close() is automatically called when `defer wbReleaseFn()`.
 	// Excel::Quit() and Excel::Release() is automatically called when `defer goxcelReleaseFn()`.
