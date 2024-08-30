@@ -308,3 +308,56 @@ func (r *XlRange) Walk(walkFn func(r *XlRange, c *Cell, row, col int) error) (*C
 
 	return nil, nil
 }
+
+func (r *XlRange) Find(what string, after *Cell) (*XlRange, bool, error) {
+	var (
+		lookIn          = constants.XlFindLookInValues
+		lookAt          = constants.XlLookAtPart
+		searchOrder     = constants.XlSearchOrderByRows
+		searchDirection = constants.XlSearchDirectionNext
+		matchCase       = false
+		matchByte       = true
+	)
+	result, err := oleutil.CallMethod(r.ComObject(), "Find", what, after.ComObject(), int32(lookIn), int32(lookAt), int32(searchOrder), int32(searchDirection), matchCase, matchByte)
+	if err != nil {
+		return nil, false, err
+	}
+
+	dispatch := result.ToIDispatch()
+	if dispatch == nil {
+		return nil, false, nil
+	}
+
+	newR := NewRangeFromRange(r, dispatch)
+	return newR, true, nil
+}
+
+func (r *XlRange) FindNext(after *Cell) (*XlRange, bool, error) {
+	result, err := oleutil.CallMethod(r.ComObject(), "FindNext", after.ComObject())
+	if err != nil {
+		return nil, false, err
+	}
+
+	dispatch := result.ToIDispatch()
+	if dispatch == nil {
+		return nil, false, nil
+	}
+
+	newR := NewRangeFromRange(r, dispatch)
+	return newR, true, nil
+}
+
+func (r *XlRange) FindPrevious(before *Cell) (*XlRange, bool, error) {
+	result, err := oleutil.CallMethod(r.ComObject(), "FindPrevious", before.ComObject())
+	if err != nil {
+		return nil, false, err
+	}
+
+	dispatch := result.ToIDispatch()
+	if dispatch == nil {
+		return nil, false, nil
+	}
+
+	newR := NewRangeFromRange(r, dispatch)
+	return newR, true, nil
+}

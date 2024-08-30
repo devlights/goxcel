@@ -12,6 +12,6 @@ type (
 //
 // noinspection GoUnusedConst
 const (
-	XlByColumns XlSearchOrder = 2 //列を下方向に検索してから、次の列に移動します。
-	XlByRows    XlSearchOrder = 1 //行を横方向に検索してから、次の行に移動します。
+	XlSearchOrderByColumns XlSearchOrder = 2 //列を下方向に検索してから、次の列に移動します。
+	XlSearchOrderByRows    XlSearchOrder = 1 //行を横方向に検索してから、次の行に移動します。
 )
