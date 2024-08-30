@@ -12,6 +12,6 @@ type (
 //
 // noinspection GoUnusedConst
 const (
-	XlNext     XlSearchDirection = 1 //範囲内で、一致する次の値を検索します。
-	XlPrevious XlSearchDirection = 2 //範囲内で、一致する前の値を検索します。
+	XlSearchDirectionNext     XlSearchDirection = 1 //範囲内で、一致する次の値を検索します。
+	XlSearchDirectionPrevious XlSearchDirection = 2 //範囲内で、一致する前の値を検索します。
 )

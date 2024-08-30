@@ -12,6 +12,6 @@ type (
 //
 // noinspection GoUnusedConst
 const (
-	XlPart  XlLookAt = 2 //検索テキストの一部を検索します。
-	XlWhole XlLookAt = 1 //検索テキスト全体を検索します。
+	XlLookAtPart  XlLookAt = 2 //検索テキストの一部を検索します。
+	XlLookAtWhole XlLookAt = 1 //検索テキスト全体を検索します。
 )

@@ -7,6 +7,90 @@ import (
 	"testing"
 )
 
+func TestXlRange_Find(t *testing.T) {
+	quit := MustInitGoxcel()
+	defer quit()
+
+	excel, release := MustNewGoxcel()
+	defer release()
+
+	wbs := excel.MustWorkbooks()
+	wb, wbr := wbs.MustAdd()
+	defer wbr()
+
+	ws := wb.MustSheets(1)
+
+	rows := []int{1, 2, 3, 4, 5}
+	for _, row := range rows {
+		cols := []int{1, 2, 3, 4, 5}
+		for _, col := range cols {
+			c, _ := ws.Cells(row, col)
+			c.MustSetValue(fmt.Sprintf("%v,%v", row, col))
+		}
+	}
+
+	//
+	// Range.Find
+	//
+	rng, _ := ws.UsedRange()
+	after, _ := rng.Cells(1, 1)
+	foundRange, found, err := rng.Find("1,", after)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !found {
+		t.Fatalf("expected range to be found, got nothing")
+	}
+
+	value, err := foundRange.Value()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Log(value)
+
+	//
+	// Range.FindNext
+	//
+	after, _ = foundRange.Cells(1, 1)
+	foundRange, found, err = rng.FindNext(after)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !found {
+		t.Fatalf("expected range to be found, got nothing 2")
+	}
+
+	value, err = foundRange.Value()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Log(value)
+
+	//
+	// Range.FindPrevious
+	//
+	before, _ := foundRange.Cells(1, 1)
+	foundRange, found, err = rng.FindPrevious(before)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !found {
+		t.Fatalf("expected range to be found, got nothing 3")
+	}
+
+	value, err = foundRange.Value()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Log(value)
+}
+
 func TestXlRange_CopyPicture(t *testing.T) {
 	quit := MustInitGoxcel()
 	defer quit()

@@ -12,7 +12,8 @@ type (
 //
 // noinspection GoUnusedConst
 const (
-	XlComments XlFindLookIn = -4144 //コメント
-	XlFormulas XlFindLookIn = -4123 //数式
-	XlValues   XlFindLookIn = -4163 //値
+	XlFindLookInComments         XlFindLookIn = -4144 //コメント
+	XlFindLookInFormulas         XlFindLookIn = -4123 //数式
+	XlFindLookInValues           XlFindLookIn = -4163 //値
+	XlFindLookInCommentsThreaded XlFindLookIn = -4184 //スレッド化されたコメント
 )
