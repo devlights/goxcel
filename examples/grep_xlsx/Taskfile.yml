@@ -20,6 +20,6 @@ tasks:
     deps: [ build ]
     cmds:
       - ./{{.APP_NAME}}{{exeExt}} -help
-  clean:q
+  clean:
     cmds:
       - cmd /c "rd /s /q .task"
