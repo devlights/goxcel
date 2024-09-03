@@ -126,15 +126,15 @@ func run() error {
 				return err
 			}
 
+			name, _ := ws.Name()
 			if !found {
 				if !args.onlyHit {
-					appLog.Printf("%s: Not Found", relPath)
+					appLog.Printf("%s %q: No HIT", relPath, name)
 				}
 
 				return nil
 			}
 
-			name, _ := ws.Name()
 			if args.verbose {
 				col, _ := foundRange.Column()
 				row, _ := foundRange.Row()
@@ -142,7 +142,7 @@ func run() error {
 
 				appLog.Printf("%s %q (%d,%d): %q", relPath, name, row, col, value)
 			} else {
-				appLog.Printf("%s: %q", relPath, name)
+				appLog.Printf("%s %q: HIT", relPath, name)
 				return nil
 			}
 
