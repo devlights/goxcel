@@ -1,0 +1,25 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  APP_NAME: xls2xlsx
+
+tasks:
+  default:
+    cmds:
+      - task: run
+  build:
+    cmds:
+      - go build -o {{.APP_NAME}}{{exeExt}} .
+    sources:
+      - ./*.go
+    generates:
+      - ./{{.APP_NAME}}{{exeExt}}
+  run:
+    deps: [ build ]
+    cmds:
+      - ./{{.APP_NAME}}{{exeExt}} -help
+  clean:
+    cmds:
+      - cmd /c "rd /s /q .task"
